@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 router.post('/', function(req, res) {
-    // console.log('Received webhook request:', JSON.stringify(req.body));
-
     // Handle webhook
     handleWebhook(req, res).then(function (result) {
         console.log(result)
@@ -15,17 +13,17 @@ router.post('/', function(req, res) {
 
 const handleWebhook = async (req, res) => {
     const raw_body = req.body;
-    console.log(`Received webhook request:' ${raw_body}`)
+    console.log(`Received webhook request:' ${JSON.stringify(raw_body)}`)
     const status = raw_body.Notifications[0].Action;
     const data = raw_body.Notifications[0].Data[0];
     const statusValue = await data.Status;
     const branchId = data.BranchId;
     const invoiceDetails = data.InvoiceDetails;
     const finalResult = null;
-    let Response = null;
+    let createTaskBaseVNResponse = null;
 
 
-    const accessTokenDetails = {
+    const kiotVietAccessTokenDetails = {
         'scope': 'PublicApi.Access',
         'grant_type': 'client_credentials',
         'client_id': '57da04ba-f842-4973-a094-db44a168ecc6',
@@ -33,9 +31,9 @@ const handleWebhook = async (req, res) => {
     };
 
     let accessTokenFormBody = [];
-    for (let property in accessTokenDetails) {
+    for (let property in kiotVietAccessTokenDetails) {
         let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(accessTokenDetails[property]);
+        let encodedValue = encodeURIComponent(kiotVietAccessTokenDetails[property]);
         accessTokenFormBody.push(encodedKey + "=" + encodedValue);
     }
     accessTokenFormBody = accessTokenFormBody.join("&");
@@ -70,14 +68,13 @@ const handleWebhook = async (req, res) => {
     const sdtDaily = daily[0].contactNumber;
 
 
-    const details = {
+    const baseVNBodyDetails = {
         'access_token': '7283-VLEJHZCDNE3L6RPK7VUU84V274B7V2N3VEQAHATVWG6VH7U69N3FGQ8RSJNX5HFJ-JWUJYADAH6FS77KJVA53UJ3JXKYL72U8Z4JEDC3MZ7XLST93WQD8MR4C89XATV4H',
-        'username': 'cuongdv',
         'creator_username': 'adminftiles',
         'followers': 'adminftiles',
-        'workflow_id': '5252',
-        'content': 'Test',
-        'name': `Giao ${data.Code}`,
+        'workflow_id': '6440',
+        'content': `${data.Description}`,
+        'name': `${data.Code}`,
         'custom_so_hop_dong': data.Code,
         'custom_chi_tiet_don_dat_hang': data.Code,
         'custom_gia_tri_hop_dong': data.Total,
@@ -91,9 +88,23 @@ const handleWebhook = async (req, res) => {
         'custom_gia_tri_don_hang': data.Total,
         'stage_export': "Nhận Đơn Giao Hàng",
         'custom_don_hang_thuoc_phong_kinh_doanh': data.BranchName,
-        'custom_so_dien_thoai_nguoi_nhan': data.InvoiceDelivery.ContactNumber
-    };
+        'custom_so_dien_thoai_nguoi_nhan': data.InvoiceDelivery != null ? data.InvoiceDelivery.ContactNumber : ""
+    }
 
+    if(filterBranch(data.BranchName)){
+        const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
+        if(isJobExistInBaseVN === undefined){
+            await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails);
+        } else {
+            await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
+        }
+    }
+
+
+    return {statusValue, createTaskBaseVNResponse};
+}
+
+const createTaskBaseVN = async function (createTaskBaseVNResponse, statusValue, status, details) {
     let formBody = [];
     for (let property in details) {
         let encodedKey = encodeURIComponent(property);
@@ -102,10 +113,8 @@ const handleWebhook = async (req, res) => {
     }
     formBody = formBody.join("&");
 
-
-
-    if(statusValue != 2 && status.includes("update")){
-        const Request = await fetch('https://workflow.base.vn/extapi/v1/job/create', {
+    if(statusValue !== 2 && status.includes("update")){
+        const createTaskBaseVNRequest = await fetch('https://workflow.base.vn/extapi/v1/job/create', {
             method: 'POST',
             headers:{
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -113,12 +122,87 @@ const handleWebhook = async (req, res) => {
             body: formBody
         });
 
-        Response = await Request.json();
+        createTaskBaseVNResponse = await createTaskBaseVNRequest.json();
     }
 
-    console.log(Response);
-
-    return {statusValue, Response};
+    console.log("Create Job BaseVN response: \n" + JSON.stringify(createTaskBaseVNResponse));
 }
+
+const editTaskBaseVN = async function (editTaskBaseVNResponse, statusValue, status, updatedBodyDetails, taskId) {
+    let formBody = [];
+    for (let property in updatedBodyDetails) {
+        let encodedKey = encodeURIComponent(property);
+        let encodedValue = encodeURIComponent(updatedBodyDetails[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+        formBody.push("id" + "="+ taskId);
+    }
+    formBody = formBody.join("&");
+
+    if(statusValue !== 2 && status.includes("update")){
+        const createTaskBaseVNRequest = await fetch('https://workflow.base.vn/extapi/v1/job/edit', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formBody
+        });
+
+        editTaskBaseVNResponse = await createTaskBaseVNRequest.json();
+    }
+
+    console.log("Edit Job BaseVN: \n" + JSON.stringify(editTaskBaseVNResponse));
+}
+
+const checkIfJobExistInBaseVN = async function (jobId){
+    const baseVNBodyDetails = {
+        'access_token': '7283-VLEJHZCDNE3L6RPK7VUU84V274B7V2N3VEQAHATVWG6VH7U69N3FGQ8RSJNX5HFJ-JWUJYADAH6FS77KJVA53UJ3JXKYL72U8Z4JEDC3MZ7XLST93WQD8MR4C89XATV4H',
+        'creator_username': 'adminftiles',
+        'workflow_id': '6440',
+        'status': 'active'
+    };
+
+
+    let formBody = [];
+    for (let property in baseVNBodyDetails) {
+        let encodedKey = encodeURIComponent(property);
+        let encodedValue = encodeURIComponent(baseVNBodyDetails[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    const createTaskBaseVNRequest = await fetch('https://workflow.base.vn/extapi/v1/jobs/get', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody
+    });
+
+   const allJobsResponse = await createTaskBaseVNRequest.json();
+   const allJobs = allJobsResponse.jobs;
+
+    const allJobsName = allJobs.map((job) => {
+        let name = job.name
+        let id = job.id
+        return { name, id };
+    });
+
+    console.log("All Jobs from BaseVN: \n"+ JSON.stringify(allJobsName))
+
+    const foundDuplicatedJob = allJobsName.find((job) => job.name === jobId);
+
+    if(foundDuplicatedJob !== undefined){
+        console.log("DUPLICATED JOB: "+ foundDuplicatedJob.name + foundDuplicatedJob.id );
+    }
+
+    return foundDuplicatedJob;
+}
+
+
+const filterBranch = function (branchName){
+    const acceptedBranch = ["Hồ Chí Minh 1 (Đại lý)", "Hồ Chí Minh 2 (Thiết kế)", "Hồ Chí Minh 3 (Showroom)"]
+    return acceptedBranch.includes(branchName)
+}
+
 
 module.exports = router;
