@@ -72,7 +72,7 @@ const handleWebhook = async (req, res) => {
         'access_token': '7283-VLEJHZCDNE3L6RPK7VUU84V274B7V2N3VEQAHATVWG6VH7U69N3FGQ8RSJNX5HFJ-JWUJYADAH6FS77KJVA53UJ3JXKYL72U8Z4JEDC3MZ7XLST93WQD8MR4C89XATV4H',
         'creator_username': 'adminftiles',
         'followers': 'adminftiles',
-        'workflow_id': '6440',
+        'workflow_id': '5252',
         'content': `${data.Description}`,
         'name': `${data.Code}`,
         'custom_so_hop_dong': data.Code,
