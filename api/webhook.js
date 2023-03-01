@@ -227,7 +227,7 @@ const deleteTaskBaseVN = async function (deleteTaskBaseVNResponse, updatedBodyDe
 
 
 const filterBranch = function (branchName){
-    const acceptedBranch = ["Hồ Chí Minh 1 (Đại lý)", "Hồ Chí Minh 2 ( Thiết Kế )", "Hồ Chí Minh 3 (Showroom )"]
+    const acceptedBranch = ["Kho Tổng Miền Nam", "Hồ Chí Minh 1 (Đại lý)", "Hồ Chí Minh 2 ( Thiết Kế )", "Hồ Chí Minh 3 (Showroom )"]
     return acceptedBranch.includes(branchName);
 }
 
