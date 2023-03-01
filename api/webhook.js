@@ -91,7 +91,7 @@ const handleWebhook = async (req, res) => {
         'custom_so_dien_thoai_nguoi_nhan': data.InvoiceDelivery != null ? data.InvoiceDelivery.ContactNumber : ""
     }
 
-    if(filterAgency(data.BranchName, data.CustomerCode)){
+    if(filterAgency(data.BranchName, data.CustomerName)){
         if(filterBranch(data.BranchName)){
             const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
             if(isJobExistInBaseVN === undefined){
@@ -233,9 +233,9 @@ const filterBranch = function (branchName){
 
 const filterAgency = function (branchName, customerBranchCode){
     const highestBranch = "Kho Tổng Miền Nam";
-    const hcmBranchCodes = ["HCM 1", "HCM 2", "HCM 3"]
+    const hcmBranchName = ["Hồ Chí Minh 1 ( Đại Lý )", "Hồ Chí Minh 2 ( Thiết Kế )", "Hồ Chí Minh 3 ( Showroom )"]
 
-    if(branchName.trim().toLowerCase() === highestBranch.trim().toLowerCase() && hcmBranchCodes.includes(customerBranchCode)){
+    if((branchName.trim().toLowerCase() === highestBranch.trim().toLowerCase()) && hcmBranchName.includes(customerBranchCode)){
         return false;
     }
 
