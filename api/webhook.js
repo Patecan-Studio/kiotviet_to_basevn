@@ -91,15 +91,16 @@ const handleWebhook = async (req, res) => {
         'custom_so_dien_thoai_nguoi_nhan': data.InvoiceDelivery != null ? data.InvoiceDelivery.ContactNumber : ""
     }
 
-    if(filterBranch(data.BranchName)){
-        const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
-        if(isJobExistInBaseVN === undefined){
-            await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails);
-        } else {
-            await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
+    if(filterAgency(data.BranchName, data.CustomerCode)){
+        if(filterBranch(data.BranchName)){
+            const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
+            if(isJobExistInBaseVN === undefined){
+                await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails);
+            } else {
+                await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
+            }
         }
     }
-
 
     return {statusValue, createTaskBaseVNResponse};
 }
@@ -198,10 +199,47 @@ const checkIfJobExistInBaseVN = async function (jobId){
     return foundDuplicatedJob;
 }
 
+const deleteTaskBaseVN = async function (deleteTaskBaseVNResponse, updatedBodyDetails, taskId) {
+    let formBody = [];
+    for (let property in updatedBodyDetails) {
+        let encodedKey = encodeURIComponent(property);
+        let encodedValue = encodeURIComponent(updatedBodyDetails[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+        formBody.push("id" + "="+ taskId);
+    }
+    formBody = formBody.join("&");
+
+
+        const deleteTaskBaseVNRequest = await fetch('', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formBody
+        });
+
+    deleteTaskBaseVNResponse = await deleteTaskBaseVNRequest.json();
+
+
+    console.log("Delete Job BaseVN: \n" + JSON.stringify(editTaskBaseVNResponse));
+}
+
+
 
 const filterBranch = function (branchName){
-    const acceptedBranch = ["Hồ Chí Minh 1 (Đại lý)", "Hồ Chí Minh 2 (Thiết kế)", "Hồ Chí Minh 3 (Showroom)"]
-    return acceptedBranch.includes(branchName)
+    const acceptedBranch = ["Hồ Chí Minh 1 (Đại lý)", "Hồ Chí Minh 2 ( Thiết Kế )", "Hồ Chí Minh 3 (Showroom )"]
+    return acceptedBranch.includes(branchName);
+}
+
+const filterAgency = function (branchName, customerBranchCode){
+    const highestBranch = "Kho Tổng Miền Nam";
+    const hcmBranchCodes = ["HCM 1", "HCM 2", "HCM 3"]
+
+    if(branchName.trim().toLowerCase() === highestBranch.trim().toLowerCase() && hcmBranchCodes.includes(customerBranchCode)){
+        return false;
+    }
+
+    return true;
 }
 
 
