@@ -16,6 +16,7 @@ const handleWebhook = async (req, res) => {
     console.log(`Received webhook request:' ${JSON.stringify(raw_body)}`)
     const status = raw_body.Notifications[0].Action;
     const data = raw_body.Notifications[0].Data[0];
+    const invoiceCode = data.Code;
     const statusValue = await data.Status;
     const branchId = data.BranchId;
     const invoiceDetails = data.InvoiceDetails;
@@ -72,7 +73,8 @@ const handleWebhook = async (req, res) => {
         'access_token': '7283-VLEJHZCDNE3L6RPK7VUU84V274B7V2N3VEQAHATVWG6VH7U69N3FGQ8RSJNX5HFJ-JWUJYADAH6FS77KJVA53UJ3JXKYL72U8Z4JEDC3MZ7XLST93WQD8MR4C89XATV4H',
         'creator_username': 'adminftiles',
         'followers': 'adminftiles',
-        'workflow_id': '5252',
+        'username': 'cuongdv',
+        'workflow_id': '6440',
         'content': `${data.Description}`,
         'name': `${data.Code}`,
         'custom_so_hop_dong': data.Code,
