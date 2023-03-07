@@ -74,7 +74,7 @@ const handleWebhook = async (req, res) => {
         'creator_username': 'adminftiles',
         'followers': 'adminftiles',
         'username': 'cuongdv',
-        'workflow_id': '6440',
+        'workflow_id': '5252',
         'content': `${data.Description}`,
         'name': `${data.Code}`,
         'custom_so_hop_dong': data.Code,
