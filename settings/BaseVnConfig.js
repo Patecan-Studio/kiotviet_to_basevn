@@ -1,0 +1,6 @@
+export const baseVnConfig = {
+    accessToken : '7283-VLEJHZCDNE3L6RPK7VUU84V274B7V2N3VEQAHATVWG6VH7U69N3FGQ8RSJNX5HFJ-JWUJYADAH6FS77KJVA53UJ3JXKYL72U8Z4JEDC3MZ7XLST93WQD8MR4C89XATV4H',
+    creatorUsername: 'adminftiles',
+    followers: 'adminftiles',
+    workflowId: '5252'
+}

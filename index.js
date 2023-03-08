@@ -1,9 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import webhookRouter from "./api/webhook.js";
-import webhookBaseRouter  from "./api/webhookBase.js";
-import productRouter from "./api/product.js";
+import webhookRouter from "./api/routes/webhookKiot.js";
+import webhookBaseRouter  from "./api/routes/webhookBase.js";
+import productRouter from "./api/routes/product.js";
+import {log} from "./settings/logger.js";
 
 const app = express()
 const PORT = 3000
@@ -16,11 +17,10 @@ app.use("/", webhookRouter)
 app.use("/base/webhook", webhookBaseRouter)
 app.use("/api/product", productRouter);
 
-// Start express on the defined port
 app.listen(PORT, (err) => {
     if (err) {
         return console.log('something bad happened', err)
     }
 
-    console.log(`server is listening on ${PORT}`)
+    console.log(log(`server is listening on ${PORT}`));
 })
