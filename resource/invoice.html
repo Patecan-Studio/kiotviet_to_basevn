@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="mb10" style="text-align:center">
+      <table border="0" cellpadding="1" cellspacing="1" style="height:30px; width:100%">
+        <tbody>
+        <tr>
+          <td  style="width: 30%"><img src="https://firebasestorage.googleapis.com/v0/b/gnh-file-portal.appspot.com/o/zns%2Fftiles-logo.jpg?alt=media&token=d3fe35ff-f810-4810-9a20-549014800a95"></td>
+          <td style="width: 70%;text-align:left"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:18px"><strong>Ftiles - Lead The Future</strong></span><br />
+			Địa chỉ: {{Dia_Chi_Chi_Nhanh}} - {{Phuong_Xa_Chi_Nhanh}} - {{Khu_Vuc_Chi_Nhanh_QH_TP}}<br />
+			Điện thoại: {{Dien_Thoai_Chi_Nhanh}}</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="printBox">
+      <div style="text-align:center">
+        <table border="0" cellpadding="4" cellspacing="0" style="border-collapse:collapse; width:100%">
+          <tbody>
+          <tr>
+            <td colspan="3" style="text-align:center; vertical-align:top"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:20px"><strong>{{Tieu_De_In}}</strong></span></span></td>
+          </tr>
+          <tr>
+          <tr>
+            <td colspan="3" style="text-align:center; vertical-align:top"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:20px"><strong>HÓA ĐƠN BÁN HÀNG</strong></span></span></td>
+          </tr>
+            <td style="text-align:center; vertical-align:top; width:36%"><span style="font-family:Arial,Helvetica,sans-serif"><strong><span style="font-size:14px">Ngày {{Ngay_Thang_Nam}}</span></strong></span></td>
+            <td style="vertical-align:top; width:32%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px">Số HĐ:&nbsp;{{Ma_Don_Hang}}</span></span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table style="width:100%">
+        <tbody>
+        <tr>
+          <td style=""><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px">Khách hàng: <strong>{{Khach_Hang}}&nbsp</strong></span></span></td>
+        </tr>
+        <tr>
+          <td><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px">Địa chỉ: {{Dia_Chi_Khach_Hang}} ,&nbsp;{{Phuong_Xa_Khach_Hang}} ,&nbsp;{{Khu_Vuc_Khach_Hang_QH_TP}}</span></span></td>
+        </tr>
+        <tr>
+          <td colspan="1" rowspan="1"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px">Liên hệ: {{So_Dien_Thoai}}</span></span></td>
+        </tr>
+        <tr>
+          <td><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px">Nhân viên bán hàng: {{Nhan_Vien_Ban_Hang}} - {{Dien_Thoai_Nguoi_Ban}}</span></span></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <table border="1" cellpadding="2" cellspacing="0" style="border-collapse:collapse; width:100%">
+        <tbody>
+        <tr style="background-color:#dddddd">
+          <td style="text-align:center; width:5%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>STT</strong></span></span></td>
+          <td style="text-align:center; "><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Tên hàng và quy cách</strong></span></span></td>
+          <td style="text-align:center; width:6%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>ĐVT</strong></span></span></td>
+          <td style="text-align:center; width:8%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Số lượng</strong></span></span></td>
+          <td style="text-align:center; width:10%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Thành Tiền</strong></span></span></td>
+          <td style="text-align:center; width:12%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Thanh toán</strong></span></span></td>
+        </tr>
+        {{#each products}}
+        <tr>
+          <td style="text-align:center"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">{{STT}}</span></span></td>
+          <td><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">{{Ten_Hang_Hoa}}&nbsp;</span></span></td>
+          <td style="text-align:center"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">{{Don_Vi_Tinh}}</span></span></td>
+          <td style="text-align:center"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">{{So_Luong}}</span></span></td>
+          <td style="text-align:right"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">{{Don_Gia_Sau_Chiet_Khau}}</span></span></td>
+          <td style="text-align:right"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:12px">{{Thanh_Toan}}</span></span></td>
+        </tr>
+        {{/each}}
+        </tbody>
+      </table>
+
+      <table border="1" cellpadding="3" cellspacing="0" style="border-collapse:collapse; width:100%">
+        <tbody>
+        <tr style="border-top:hidden">
+          <td rowspan="1" style="vertical-align:top"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Tổng số lượng hàng (m2)</strong></span></span></td>
+          <td colspan="5" rowspan="1" style="text-align:right; vertical-align:top; width:8%"><span style="font-size:14px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>{{Tong_So_Luong}}</strong></span></span></td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Tổng tiền hàng</strong></span></span></td>
+          <td colspan="5" rowspan="1" style="text-align:right; vertical-align:top; width:8%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>{{Tong_Tien_Hang}}</strong></span></span></td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Chiết khấu hóa đơn ({{Chiet_Khau_Hoa_Don_Phan_Tram}})</strong></span></span></td>
+          <td colspan="5" rowspan="1" style="text-align:right; vertical-align:top; width:8%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>{{Chiet_Khau_Hoa_Don}}</strong></span></span></td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Tổng cộng</strong></span></span></td>
+          <td colspan="5" rowspan="1" style="text-align:right; vertical-align:top; width:8%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>{{Tong_Cong}}</strong></span></span></td>
+        </tr>
+        <tr>
+          <td colspan="6" style="vertical-align:top"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Bằng chữ:&nbsp;</strong>{{Tong_Cong_Bang_Chu}}&nbsp;</span></span></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <p><span style="font-family:Arial,Helvetica,sans-serif"><strong><span style="font-size:14px">Ghi Chú: {{Ghi_Chu}}</span></strong></span></p>
+
+      <p class="MsoBodyText" style="margin-bottom:0cm; margin-left:0cm; margin-right:0cm; margin-top:0cm"><span style="font-size:14px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Thông tin thanh toán:&nbsp;</strong><br />
+<strong>TK: Đỗ Viết Vũ - 0932915999-&nbsp;Ngân Hàng Vietinbank chi nhánh 7 HCM</strong></span></span></p>
+
+      <p class="MsoBodyText" style="margin-bottom:0cm; margin-left:0cm; margin-right:0cm; margin-top:0cm">&nbsp;</p>
+
+      <table style="width:100%">
+        <tbody>
+        <tr>
+          <td colspan="2" style="text-align:center; width:33%">&nbsp;</td>
+          <td style="text-align:center; width:32%">&nbsp;</td>
+          <td style="text-align:center; width:35%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px">Ngày {{Ngay}} tháng {{Thang}} năm {{Nam}}</span></span></td>
+        </tr>
+        <tr>
+          <td colspan="2" rowspan="1" style="text-align:center; width:33%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Xác nhận của đại lý</strong><br />
+			<em>(Ký,&nbsp; họ tên)</em> </span></span></td>
+          <td style="text-align:center; width:32%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Kế toán</strong></span><br />
+			<span style="font-size:14px"><em>(Ký,&nbsp; họ tên)</em></span></span></td>
+          <td style="text-align:center; width:35%"><span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px"><strong>Nhân Viên Kinh Doanh</strong><br />
+			<em>(Ký,&nbsp; họ tên)</em> </span></span></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align:center; width:33%">&nbsp;</td>
+          <td style="text-align:center; width:32%">
+            <p>&nbsp;</p>
+
+            <p>&nbsp;</p>
+          </td>
+          <td style="text-align:center; width:35%">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align:center; width:33%">{{Khach_Hang}}</td>
+          <td style="text-align:center; width:32%">&nbsp;</td>
+          <td style="text-align:center; width:35%">{{Nhan_Vien_Ban_Hang}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <span style="font-family:Arial,Helvetica,sans-serif"><span style="font-size:14px">&nbsp;</span></span>
+
+      <p>&nbsp;</p>
+    </div>
+
+
+
+</body>
+
+<style>
+  .printBox {
+    font-family: Arial, sans-serif;
+  }
+
+  table {
+    page-break-inside: auto
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto
+  }
+</style>
+</html>
