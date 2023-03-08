@@ -1,18 +1,20 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-// Initialize express and define a port
+import express from "express";
+import bodyParser from "body-parser";
+
+import webhookRouter from "./api/webhook.js";
+import webhookBaseRouter  from "./api/webhookBase.js";
+import productRouter from "./api/product.js";
+
 const app = express()
-const webhook = require("./api/webhook");
-const webhookBase = require("./api/webhook");
-const product = require("./api/product");
 const PORT = 3000
+
 // Tell express to use body-parser's JSON parsing
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/webhook",webhook)
-app.use("/base/webhook",webhookBase)
-app.use("/api/product", product);
+app.use("/", webhookRouter)
+app.use("/base/webhook", webhookBaseRouter)
+app.use("/api/product", productRouter);
 
 // Start express on the defined port
 app.listen(PORT, (err) => {

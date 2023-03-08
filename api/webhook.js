@@ -3,7 +3,7 @@ import {findBranchInformation} from "../invoice_processor/invoice_processor.js";
 
 const router = express.Router();
 
-router.post('/', function(req, res) {
+router.post('/webhook', function(req, res) {
     // Handle webhook
     handleWebhook(req, res).then(function (result) {
         console.log(result)
