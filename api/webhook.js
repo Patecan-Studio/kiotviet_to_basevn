@@ -1,4 +1,6 @@
-const express = require("express");
+import express from "express";
+import {findBranchInformation} from "../invoice_processor/invoice_processor.js";
+
 const router = express.Router();
 
 router.post('/', function(req, res) {
@@ -23,57 +25,13 @@ const handleWebhook = async (req, res) => {
     const finalResult = null;
     let createTaskBaseVNResponse = null;
 
-
-    const kiotVietAccessTokenDetails = {
-        'scope': 'PublicApi.Access',
-        'grant_type': 'client_credentials',
-        'client_id': '57da04ba-f842-4973-a094-db44a168ecc6',
-        'client_secret': '695DAFF42CFDCD9A73BA6B97683600363F257815'
-    };
-
-    let accessTokenFormBody = [];
-    for (let property in kiotVietAccessTokenDetails) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(kiotVietAccessTokenDetails[property]);
-        accessTokenFormBody.push(encodedKey + "=" + encodedValue);
-    }
-    accessTokenFormBody = accessTokenFormBody.join("&");
-
-    const accessTokenRequest = await fetch("https://id.kiotviet.vn/connect/token",{
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Accept": "application/json",
-        },
-        body: accessTokenFormBody
-    })
-
-    const accessTokenResponse = await accessTokenRequest.json()
-
-    const branchRequest = await fetch("https://public.kiotapi.com/branches",{
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Retailer": "ftiles",
-            "Authorization": `Bearer ${accessTokenResponse.access_token}`
-        }
-    })
-
-    const branchRequestResponse = await branchRequest.json();
-
-    const daily = branchRequestResponse.data.filter(function (branch) {
-        return branch.id === branchId;
-    });
-
-    const sdtDaily = daily[0].contactNumber;
-
+    const sdtDaily = await findBranchInformation(branchId).contactNumber;
 
     const baseVNBodyDetails = {
         'access_token': '7283-VLEJHZCDNE3L6RPK7VUU84V274B7V2N3VEQAHATVWG6VH7U69N3FGQ8RSJNX5HFJ-JWUJYADAH6FS77KJVA53UJ3JXKYL72U8Z4JEDC3MZ7XLST93WQD8MR4C89XATV4H',
         'creator_username': 'adminftiles',
         'followers': 'adminftiles',
-        'username': 'cuongdv',
+        'username': '@cuongdv',
         'workflow_id': '5252',
         'content': `${data.Description}`,
         'name': `${data.Code}`,
@@ -97,7 +55,7 @@ const handleWebhook = async (req, res) => {
         if(filterBranch(data.BranchName)){
             const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
             if(isJobExistInBaseVN === undefined){
-                await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails);
+                await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
             } else {
                 await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
             }
@@ -107,7 +65,7 @@ const handleWebhook = async (req, res) => {
     return {statusValue, createTaskBaseVNResponse};
 }
 
-const createTaskBaseVN = async function (createTaskBaseVNResponse, statusValue, status, details) {
+const createTaskBaseVN = async function (createTaskBaseVNResponse, statusValue, status, details, invoiceCode) {
     let formBody = [];
     for (let property in details) {
         let encodedKey = encodeURIComponent(property);
@@ -244,5 +202,4 @@ const filterAgency = function (branchName, customerBranchCode){
     return true;
 }
 
-
-module.exports = router;
+export default router;
