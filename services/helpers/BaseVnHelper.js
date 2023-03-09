@@ -1,13 +1,14 @@
 import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
 
-export const checkIfJobExistInBaseVN = async function (jobId){
+export const checkIfJobExistInBaseVN = async function (invoiceCode){
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
         'workflow_id': baseVnConfig.workflowId,
         'status': 'active'
     };
+
 
 
     let formBody = [];
@@ -37,11 +38,16 @@ export const checkIfJobExistInBaseVN = async function (jobId){
 
     console.log(log(`CHECKING IN BaseVN ALL JOBS: `)+ '\n'+ JSON.stringify(allJobsName) + '\n')
 
-    const foundDuplicatedJob = allJobsName.find((job) => job.name === jobId);
+    const foundDuplicatedJob = allJobsName.find((job) => job.name === invoiceCode);
 
     if(foundDuplicatedJob !== undefined){
         console.log(log(`FOUND DUPLICATED JOB: `)  + foundDuplicatedJob.name + foundDuplicatedJob.id );
     }
 
     return foundDuplicatedJob;
+}
+
+
+const checkIfInvoiceIsUpdatedOrDeleted = function (invoiceCode){
+
 }

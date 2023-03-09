@@ -40,13 +40,18 @@ export const handleWebhookInvoice = async (req, res) => {
         'custom_so_dien_thoai_nguoi_nhan': data.InvoiceDelivery != null ? data.InvoiceDelivery.ContactNumber : ""
     }
 
-    if(filterAgency(data.BranchId, data.CustomerCode) && filterBranch(data.BranchId)){
-        const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
-        if(await checkIfJobExistInBaseVN(data.Code) === undefined){
-            await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
-        } else {
-            await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
+    if(filterAgency(data.BranchId, data.CustomerId)){
+
+        if(filterBranch(data.BranchId)){
+            const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
+            if(isJobExistInBaseVN  === undefined){
+                console.log(log(`----> THIS IS NEW JOB <----`))
+                await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
+            } else {
+                await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
+            }
         }
+
     }
 
     return {statusValue, createTaskBaseVNResponse};
@@ -135,12 +140,12 @@ const filterBranch = function (branchCode){
     return acceptedBranch.includes(branchCode);
 }
 
-const filterAgency = function (branchId, customerCode){
+const filterAgency = function (branchId, customerId){
     const highestBranch = 1000000114;
-    let hcmBranchName = ['1000000115', '1000000136', '1000000131']
+    let hcmBranchCode = [1003114420, 1003094169];
 
 
-    if(branchId === highestBranch && hcmBranchName.includes(customerCode) ){
+    if(branchId === highestBranch && hcmBranchCode.includes(customerId) ){
         return false;
     }
 
@@ -201,7 +206,19 @@ export const createManual = async (req, res) => {
         'custom_so_dien_thoai_nguoi_nhan': data.invoiceDelivery != null ? data.invoiceDelivery.contactNumber : ""
     }
 
-    await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
+    if(filterAgency(data.BranchId, data.CustomerCode)){
+
+        if(filterBranch(data.BranchId)){
+            const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
+            if(isJobExistInBaseVN  === undefined){
+                console.log(log(`----> THIS IS NEW JOB <----`))
+                await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
+            } else {
+                await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
+            }
+        }
+
+    }
 
     return {statusValue, createTaskBaseVNResponse};
 }

@@ -24,6 +24,8 @@ export async function getZnsAccessToken(){
 
     const accessTokenResponse = await accessTokenRequest.json();
 
+    console.log("ZNS TOKEN: "+ JSON.stringify(accessTokenResponse));
+
     znsConfig.znsAccessTokenDetails.refresh_token = accessTokenResponse.refresh_token;
 
     return `${accessTokenResponse.access_token}`;
