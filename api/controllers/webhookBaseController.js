@@ -14,7 +14,7 @@ export const handleWebhookCreate = async (req, res) => {
     const customerName = raw_body.custom_ten_khach_hang_dai_ly_;
     const orderDate = dateFormat(new Date(0).setUTCSeconds(raw_body.stage_start), "dd/mm/yyyy");
     const giaTriDonHang = Number(raw_body.custom_gia_tri_don_hang)
-    const znsPhoneNumber = '84949491968';
+    const znsPhoneNumber = '84909801090';
 
     console.log(log(`CREATE INVOICE PDF: `));
     await createInvoice(orderCode);

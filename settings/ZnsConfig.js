@@ -51,9 +51,9 @@ export const znsConfig = {
         return znsCreate;
     },
     znsAccessTokenDetails: {
-        refresh_token: '2yr2ISecZmfPr0W3hYQF7NtuLchU3_We4Fb5MBL7eYHDcNXSxLcAQIAhDM7FJkaOQRvpJPfzo0DeznjodIt21JZUHNl95VXp8F4Z2eq0X7vJqWysWa3gR3YCTrxBCAmFU85zGzS9_sTXyrXltnNR9IEL3bhIJD0gGAP6LAiaeMdlPK9DMwlLEFri1ceutkSZs65AD6tkt5YEU0m_S_hDDizrSnDW-gv8u6mT97NSgK98zMTyodIZ00',
+        refresh_token: 'SdrGSg6baoOWP1eunQMJCGH8H56rZEG4QKbNOzx4lWixBMfhZDxsIL8UHrQZoPKu40uvLxp_jWvSHcfZkwom00jbFsdedOns4qfP6Ao8y7jWQNKahCYUQmGt3KxbkDW8H3e7K_c1Ys1TIB9Ci8HBOrSCbWIsv4Pd2ox8Il_q25TsOEvAgveJ24bcboFd0ILzDDp62-5bBG5miFyDxGf3V3xJapQT1aS82j2B4_rVJH1UMIPQncbheVU_B0',
         app_id: '4404942929062535266',
-        grant_type: 'refresh_token'
+        grant_type: 'refresh_token',
     }
 
 }

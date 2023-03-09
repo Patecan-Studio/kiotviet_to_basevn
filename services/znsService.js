@@ -6,7 +6,6 @@ export const sendZnsDone = async function (doneZnsResponse, znsPhoneNumber ,orde
     znsConfig.setZnsDoneTemplate( znsPhoneNumber ,orderId, customerName)
 
     const accessToken = await getZnsAccessToken();
-    console.log(accessToken);
 
     const createZnsRequest = await fetch('https://business.openapi.zalo.me/message/template', {
         method: 'POST',
@@ -29,7 +28,7 @@ export const sendZnsXacNhanDonHang = async function (createZnsResponse, znsPhone
 
     znsConfig.setZnsCreateTemplate(znsPhoneNumber, orderCode, orderDate, receiverPhoneNumber, customerName, giaTriDonHang, status)
     const accessToken = await getZnsAccessToken();
-    console.log(accessToken);
+
 
     const createZnsRequest = await fetch('https://business.openapi.zalo.me/message/template', {
         method: 'POST',
