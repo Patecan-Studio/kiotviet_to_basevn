@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv'
-// see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-importdotenv.config()
-
-
 export const znsConfig = {
     znsPhoneNumber: "",
     orderCode: "",
