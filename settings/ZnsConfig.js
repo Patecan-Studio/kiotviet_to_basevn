@@ -1,3 +1,14 @@
+import * as dotenv from 'dotenv'
+import store from "store2"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
+
+import { LocalStorage } from "node-localstorage";
+
+
+
+const localStorage = new LocalStorage('./scratch');
+
+
 export const znsConfig = {
     znsPhoneNumber: "",
     orderCode: "",
@@ -51,7 +62,6 @@ export const znsConfig = {
         return znsCreate;
     },
     znsAccessTokenDetails: {
-        refresh_token: 'SdrGSg6baoOWP1eunQMJCGH8H56rZEG4QKbNOzx4lWixBMfhZDxsIL8UHrQZoPKu40uvLxp_jWvSHcfZkwom00jbFsdedOns4qfP6Ao8y7jWQNKahCYUQmGt3KxbkDW8H3e7K_c1Ys1TIB9Ci8HBOrSCbWIsv4Pd2ox8Il_q25TsOEvAgveJ24bcboFd0ILzDDp62-5bBG5miFyDxGf3V3xJapQT1aS82j2B4_rVJH1UMIPQncbheVU_B0',
         app_id: '4404942929062535266',
         grant_type: 'refresh_token',
     }

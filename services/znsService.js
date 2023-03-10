@@ -2,6 +2,7 @@ import {znsConfig} from "../settings/ZnsConfig.js";
 import {getZnsAccessToken} from "./helpers/ZnsHelper.js";
 import {log} from "../settings/logger.js";
 
+
 export const sendZnsDone = async function (doneZnsResponse, znsPhoneNumber ,orderId, customerName) {
     znsConfig.setZnsDoneTemplate( znsPhoneNumber ,orderId, customerName)
 

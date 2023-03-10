@@ -1,8 +1,14 @@
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
 import {znsConfig} from "../../settings/ZnsConfig.js";
+import store from "store2";
+import { LocalStorage } from "node-localstorage";
+import fs from "fs";
+
 
 
 export async function getZnsAccessToken(){
-
+    let localStorage = new LocalStorage('./scratch');
     let accessTokenFormBody = [];
 
     for (let property in znsConfig.znsAccessTokenDetails) {
@@ -10,6 +16,9 @@ export async function getZnsAccessToken(){
         let encodedValue = encodeURIComponent(znsConfig.znsAccessTokenDetails[property]);
         accessTokenFormBody.push(encodedKey + "=" + encodedValue);
     }
+
+    const refreshKey = await fs.promises.readFile('./resource/zns_key.txt');
+    accessTokenFormBody.push("refresh_token" + "=" + refreshKey.toString().trim());
     accessTokenFormBody = accessTokenFormBody.join("&");
 
     const accessTokenRequest = await fetch("https://oauth.zaloapp.com/v4/oa/access_token",{
@@ -25,8 +34,8 @@ export async function getZnsAccessToken(){
     const accessTokenResponse = await accessTokenRequest.json();
 
     console.log("ZNS TOKEN: "+ JSON.stringify(accessTokenResponse));
-
-    znsConfig.znsAccessTokenDetails.refresh_token = accessTokenResponse.refresh_token;
+    await fs.promises.writeFile('./resource/zns_key.txt',accessTokenResponse.refresh_token.toString().trim());
 
     return `${accessTokenResponse.access_token}`;
+
 }
