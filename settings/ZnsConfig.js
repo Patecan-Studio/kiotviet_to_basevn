@@ -1,12 +1,5 @@
 import * as dotenv from 'dotenv'
-import store from "store2"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-dotenv.config()
-
-import { LocalStorage } from "node-localstorage";
-
-
-
-const localStorage = new LocalStorage('./scratch');
+// see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-importdotenv.config()
 
 
 export const znsConfig = {
