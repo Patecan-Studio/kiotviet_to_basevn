@@ -145,6 +145,8 @@ const filterAgency = function (branchId, customerId){
     let hcmBranchCode = [1003114420, 1003094169];
 
 
+    console.log(log(`CHECKING AGENCY:`) + ` branch ID: ${branchId} customer ID: ${customerId}`);
+
     if(branchId === highestBranch && hcmBranchCode.includes(customerId) ){
         return false;
     }
@@ -206,19 +208,20 @@ export const createManual = async (req, res) => {
         'custom_so_dien_thoai_nguoi_nhan': data.invoiceDelivery != null ? data.invoiceDelivery.contactNumber : ""
     }
 
-    if(filterAgency(data.BranchId, data.CustomerCode)){
+    if(filterAgency(data.branchId, data.customerCode)){
 
-        if(filterBranch(data.BranchId)){
+        if(filterBranch(data.branchId)){
             const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
             if(isJobExistInBaseVN  === undefined){
                 console.log(log(`----> THIS IS NEW JOB <----`))
                 await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
             } else {
+                console.log(log(`----> THIS IS EXISTED JOB <----`))
                 await editTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, isJobExistInBaseVN.id);
             }
         }
 
     }
 
-    return {statusValue, createTaskBaseVNResponse};
+    return {statusValue};
 }
