@@ -2,8 +2,21 @@ import {findBranchInformation} from "../../services/helpers/KiotVietHelper.js";
 import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
 import {checkIfJobExistInBaseVN} from "../../services/helpers/BaseVnHelper.js";
+import axios from "axios";
 
 export const handleWebhookInvoice = async (req, res) => {
+    axios({
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        url: 'https://c6f26d81bc51.ngrok.app/receiverPort/invoiceEvent',
+        data: {
+            "data": JSON.stringify(req.body)
+        }
+    })
+
+
     const raw_body = req.body;
     const status = raw_body.Notifications[0].Action;
     const data = raw_body.Notifications[0].Data[0];
