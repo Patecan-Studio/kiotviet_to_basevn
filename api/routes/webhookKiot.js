@@ -9,15 +9,15 @@ router.post('/webhook', function(req, res) {
 
     console.log(log(`RECEIVED INVOICE WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
 
-    let body = JSON.stringify(req.body);
+    let data = req.body;
     fetch('https://c6f26d81bc51.ngrok.app/receiverPort/invoiceEvent', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: body
+        body: data
     }).then(r =>{
-        console.log("ALREADY SENT WEBHOOK EVENT TO ftiles")
+        console.log(r)
     });
 
     handleWebhookInvoice(req, res).then(function (result) {
