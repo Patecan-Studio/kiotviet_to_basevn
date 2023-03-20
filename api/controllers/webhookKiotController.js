@@ -12,7 +12,7 @@ export const handleWebhookInvoice = async (req, res) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            url: 'https://c6f26d81bc51.ngrok.app/receiverPort/invoiceEvent',
+            url: 'https://b4a11d89fe10.ngrok.app/receiverPort/invoiceEvent',
             data: {
                 "data": JSON.stringify(req.body)
             }
