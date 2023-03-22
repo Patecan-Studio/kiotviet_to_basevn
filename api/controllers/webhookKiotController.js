@@ -5,21 +5,21 @@ import {checkIfJobExistInBaseVN} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
 
 export const handleWebhookInvoice = async (req, res) => {
-    try {
-        console.log("Send event to Ftile BE");
-        await axios({
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            url: 'https://b4a11d89fe10.ngrok.app/receiverPort/invoiceEvent',
-            data: {
-                "data": JSON.stringify(req.body)
-            }
-        })
-    }catch (e) {
-        console.log(e)
-    }
+    // try {
+    //     console.log("Send event to Ftile BE");
+    //     await axios({
+    //         method: 'post',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         url: 'https://b4a11d89fe10.ngrok.app/receiverPort/invoiceEvent',
+    //         data: {
+    //             "data": JSON.stringify(req.body)
+    //         }
+    //     })
+    // }catch (e) {
+    //     console.log(e)
+    // }
 
 
 
