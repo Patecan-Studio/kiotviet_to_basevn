@@ -8,23 +8,23 @@ import {createBaseJobManualImpl, handleInvoiceEventImpl} from "../services/webho
 import {handleOrderEventImpl} from "../services/webhookKiotService.js";
 
 export const handleInvoiceEvent = async (req, res) => {
-
     const body = req.body;
     let result = {};
 
-    if(req.statusCode>=200 && req.statusCode<300){
-        getUrl('ftiles-backend-dev').then((ftilesBackendDevUrl)=>{
-            axios({
-                method: 'post',
-                url: `${ftilesBackendDevUrl}/receiverPort/invoiceEvent`,
-                data: {
-                    "data": JSON.stringify(req.body)
-                }
-            })
+    getUrl('ftiles-backend-dev').then((ftilesBackendDevUrl)=>{
+        axios({
+            method: 'post',
+            url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
+            data: {
+                "data": JSON.stringify(req.body)
+            }
+        }).then((response)=>{
+            console.log(response.data)
         })
-    } else {
-        console.log(req.statusCode);
-    }
+    })
+
+
+
 
     result = await handleInvoiceEventImpl(body);
 
@@ -46,7 +46,7 @@ export const handleOrderEvent = async (req, res) => {
         }
     })
 
-    console.log(response)
+    console.log(response.data)
 
 
     result = await handleOrderEventImpl(body);
