@@ -10,6 +10,15 @@ export const handleOrderEventImpl = async (body) => {
     const raw_body = body;
 
 
+    await axios({
+        method: 'post',
+        url: `https://341d20aad966.ngrok.app/receiverPort/orderEvent`,
+        data: {
+            "data": JSON.stringify(body)
+        }
+    })
+
+
     return "good";
 }
 
