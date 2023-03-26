@@ -3,23 +3,19 @@ import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
 import {checkIfJobExistInBaseVN} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
+import {getUrl} from "../../utils/getConfigsService.js";
 
 export const handleWebhookInvoice = async (req, res) => {
-    // try {
-    //     console.log("Send event to Ftile BE");
-    //     await axios({
-    //         method: 'post',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         url: 'https://b4a11d89fe10.ngrok.app/receiverPort/invoiceEvent',
-    //         data: {
-    //             "data": JSON.stringify(req.body)
-    //         }
-    //     })
-    // }catch (e) {
-    //     console.log(e)
-    // }
+
+    getUrl('ftiles-backend-dev').then(ftilesBackendDevUrl=>{
+            axios({
+                method: 'post',
+                url: `${ftilesBackendDevUrl}/receiverPort/invoiceEvent`,
+                data: {
+                    "data": req
+                }
+            })
+    });
 
 
     const raw_body = req.body;
