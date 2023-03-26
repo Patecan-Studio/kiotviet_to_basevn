@@ -9,15 +9,12 @@ export async function getUrl(serviceName){
 
     try {
 
-        console.log("Send event to Ftile BE");
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
+        console.log("SEND REQUESTING CONFIG-SERVICE");
 
-        const response = (await axios.get(`https://ftiles-config-service.vercel.app/${serverUrl}`, config));
+
+        const response = (await axios.get(`https://ftiles-config-service.vercel.app/${serverUrl}`));
         if(response.status === 200){
+            console.log(`RESPONSE FROM CONFIG-SERVICE ${response.data}`);
             return response.data;
         }
     }catch (e) {
