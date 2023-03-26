@@ -13,7 +13,7 @@ export const handleWebhookInvoice = async (req, res) => {
         method: 'post',
         url: `${ftilesBackendDevUrl}/receiverPort/invoiceEvent`,
         data: {
-            "data": req
+            "data": JSON.parse(JSON.stringify(req))
         }
     })
 
