@@ -9,17 +9,17 @@ export const handleOrderEventImpl = async (body) => {
 
     const raw_body = body;
 
+    const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
 
-    await axios({
+    const result = await axios({
         method: 'post',
-        url: `https://341d20aad966.ngrok.app/receiverPort/orderEvent`,
+        url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
         data: {
             "data": JSON.stringify(body)
         }
     })
 
-
-    return "good";
+    return result;
 }
 
 
