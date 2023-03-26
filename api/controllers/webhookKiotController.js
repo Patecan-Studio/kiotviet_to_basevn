@@ -9,8 +9,7 @@ export const handleWebhookInvoice = async (req, res) => {
 
     const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
 
-    const requestObject = JSON.stringify(req);
-    console.log(requestObject)
+    console.log(req)
     await axios({
         method: 'post',
         url: `${ftilesBackendDevUrl}/receiverPort/invoiceEvent`,
