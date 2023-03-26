@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/webhook', function(req, res) {
 
-    console.log(log(`RECEIVED INVOICE WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
+    console.log(log(`RECEIVED INVOICE WEBHOOK: `)+ '\n' +`${JSON.stringify(req)}` +'\n')
 
     handleWebhookInvoice(req, res).then(function (result) {
         console.log(result)

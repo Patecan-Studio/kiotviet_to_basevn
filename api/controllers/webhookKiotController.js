@@ -22,7 +22,6 @@ export const handleWebhookInvoice = async (req, res) => {
     // }
 
 
-
     const raw_body = req.body;
     const status = raw_body.Notifications[0].Action;
     const data = raw_body.Notifications[0].Data[0];
