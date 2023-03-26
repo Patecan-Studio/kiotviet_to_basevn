@@ -5,12 +5,8 @@ import {checkIfJobExistInBaseVN} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
 import {getUrl} from "../../utils/getConfigsService.js";
 
-export const handleOrderEventImpl = async (body) => {
-
+export const handleStockEventImpl = async (body) => {
     const raw_body = body;
-
-
-
     return "good";
 }
 
