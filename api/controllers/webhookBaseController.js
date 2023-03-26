@@ -1,5 +1,5 @@
 import dateFormat from "dateformat";
-import {createInvoice} from "../../services/invoiceService.js";
+import {createInvoice} from "../../services/invoiceFileService.js";
 import {uploadInvoice} from "../../storage/invoice_storage.js";
 import {sendZnsDone, sendZnsXacNhanDonHang} from "../../services/znsService.js";
 import {log} from "../../settings/logger.js";

@@ -19,7 +19,7 @@ router.post('/invoice/update', function(req, res) {
 
 router.post('/order/update', function(req, res) {
 
-    console.log(log(`RECEIVED INVOICE WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
+    console.log(log(`RECEIVED ORDER WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
 
     handleOrderEvent(req, res).then(function (result) {
         console.log(result)
