@@ -34,8 +34,7 @@ router.post('/order/update', function(req, res) {
 
 router.post('/stock/update', function(req, res) {
 
-    console.log(log(`LOG WEBHOOK DATA: `)+ '\n' +`${req}` +'\n');
-    console.log(log(`RECEIVED INVOICE WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
+    console.log(log(`RECEIVED STOCK WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
 
     handleStockEvent(req, res).then(function (result) {
         console.log(result)

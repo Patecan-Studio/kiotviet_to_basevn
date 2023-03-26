@@ -64,7 +64,7 @@ export const handleStockEvent = async (req, res) => {
 
     const response = await axios({
         method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
+        url: `${ftilesBackendDevUrl}/receiverPort/stockEvent`,
         data: {
             "data": JSON.stringify(req.body)
         }
