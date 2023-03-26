@@ -9,19 +9,9 @@ export const handleOrderEventImpl = async (body) => {
 
     const raw_body = body;
 
-    const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
-    console.log(ftilesBackendDevUrl);
-    console.log(body);
 
-    const result = await axios({
-        method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
-        data: {
-            "data": JSON.stringify(body)
-        }
-    })
 
-    return result;
+    return "good";
 }
 
 
