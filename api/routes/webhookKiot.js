@@ -1,6 +1,6 @@
 import express from "express";
 import {baseVnConfig} from "../../settings/BaseVnConfig.js";
-import {createManual, handleWebhookInvoice} from "../controllers/webhookKiotController.js";
+import {createBaseJobManual, handleInvoiceEvent} from "../controllers/webhookKiotController.js";
 import {log} from "../../settings/logger.js";
 import axios from "axios";
 
@@ -11,7 +11,7 @@ router.post('/webhook', function(req, res) {
     console.log(log(`LOG WEBHOOK DATA: `)+ '\n' +`${req}` +'\n');
     console.log(log(`RECEIVED INVOICE WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
 
-    handleWebhookInvoice(req, res).then(function (result) {
+    handleInvoiceEvent(req, res).then(function (result) {
         console.log(result)
         res.status(200).send(result)
     })
@@ -19,7 +19,7 @@ router.post('/webhook', function(req, res) {
 
 
 router.post('/manualCreate', function(req, res) {
-    createManual(req, res).then(function (result) {
+    createBaseJobManual(req, res).then(function (result) {
         console.log(result)
         res.status(200).send(result)
     })
