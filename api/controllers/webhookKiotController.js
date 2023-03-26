@@ -36,19 +36,18 @@ export const handleOrderEvent = async (req, res) => {
     const body = req.body;
     let result = {};
 
-    if(req.statusCode>=200 && req.statusCode<300){
-        getUrl('ftiles-backend-dev').then((ftilesBackendDevUrl)=>{
-            axios({
-                method: 'post',
-                url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
-                data: {
-                    "data": JSON.stringify(req.body)
-                }
-            })
+    getUrl('ftiles-backend-dev').then((ftilesBackendDevUrl)=>{
+        axios({
+            method: 'post',
+            url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
+            data: {
+                "data": JSON.stringify(req.body)
+            }
         })
-    } else {
-        console.log(req.statusCode);
-    }
+    })
+
+    console.log(req.statusCode);
+
 
     result = await handleOrderEventImpl(body);
 
