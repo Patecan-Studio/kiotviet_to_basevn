@@ -7,16 +7,15 @@ import {getUrl} from "../../utils/getConfigsService.js";
 
 export const handleWebhookInvoice = async (req, res) => {
 
-    getUrl('ftiles-backend-dev').then(ftilesBackendDevUrl=>{
-            axios({
-                method: 'post',
-                url: `${ftilesBackendDevUrl}/receiverPort/invoiceEvent`,
-                data: {
-                    "data": req
-                }
-            })
-    });
+    const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
 
+    await axios({
+        method: 'post',
+        url: `${ftilesBackendDevUrl}/receiverPort/invoiceEvent`,
+        data: {
+            "data": req
+        }
+    })
 
     const raw_body = req.body;
     const status = raw_body.Notifications[0].Action;
