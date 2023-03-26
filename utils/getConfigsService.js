@@ -13,6 +13,7 @@ export async function getUrl(serviceName){
 
 
         const response = (await axios.get(`https://ftiles-config-service.vercel.app/${serverUrl}`));
+        console.log(response.data)
         if(response.status === 200){
             console.log(`RESPONSE FROM CONFIG-SERVICE ${response.data}`);
             return response.data;
