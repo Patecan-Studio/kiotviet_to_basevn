@@ -4,7 +4,7 @@ import {log} from "../../settings/logger.js";
 import {checkIfJobExistInBaseVN} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
 import {getUrl} from "../../utils/getConfigsService.js";
-import {createBaseJobManualImpl} from "../services/webhookKiotInvoiceService.js";
+import {createBaseJobManualImpl, handleInvoiceEventImpl} from "../services/webhookKiotInvoiceService.js";
 
 export const handleInvoiceEvent = async (req, res) => {
 
