@@ -11,17 +11,18 @@ export const handleInvoiceEvent = async (req, res) => {
     const body = req.body;
     let result = {};
 
-    getUrl('ftiles-backend-dev').then((ftilesBackendDevUrl)=>{
-        axios({
-            method: 'post',
-            url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
-            data: {
-                "data": JSON.stringify(req.body)
-            }
-        }).then((response)=>{
-            console.log(response.data)
-        })
+    const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
+
+    const response = await axios({
+        method: 'post',
+        url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
+        data: {
+            "data": JSON.stringify(req.body)
+        }
     })
+
+    console.log(response.data)
+
 
 
 
