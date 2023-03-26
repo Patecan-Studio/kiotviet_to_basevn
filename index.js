@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import webhookRouter from "./api/routes/webhookKiot.js";
-import webhookBaseRouter  from "./api/routes/webhookBase.js";
+import webhookKiotRouter from "./api/routes/webhookKiotRoute.js";
+import webhookBaseRouter  from "./api/routes/webhookBaseRoute.js";
 import productRouter from "./api/routes/product.js";
 import {log} from "./settings/logger.js";
 
@@ -13,7 +13,7 @@ const PORT = 3000
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/", webhookRouter)
+app.use("/kiotviet/webhook", webhookKiotRouter)
 app.use("/base/webhook", webhookBaseRouter)
 app.use("/api/product", productRouter);
 

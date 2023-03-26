@@ -5,6 +5,7 @@ import {checkIfJobExistInBaseVN} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
 import {getUrl} from "../../utils/getConfigsService.js";
 import {createBaseJobManualImpl, handleInvoiceEventImpl} from "../services/webhookKiotInvoiceService.js";
+import {handleOrderEventImpl} from "../services/webhookKiotService.js";
 
 export const handleInvoiceEvent = async (req, res) => {
 
@@ -26,6 +27,30 @@ export const handleInvoiceEvent = async (req, res) => {
     }
 
     result = await handleInvoiceEventImpl(body);
+
+    return result;
+}
+
+export const handleOrderEvent = async (req, res) => {
+
+    const body = req.body;
+    let result = {};
+
+    if(req.statusCode>=200 && req.statusCode<300){
+        getUrl('ftiles-backend-dev').then((ftilesBackendDevUrl)=>{
+            axios({
+                method: 'post',
+                url: `${ftilesBackendDevUrl}/receiverPort/invoiceEvent`,
+                data: {
+                    "data": JSON.stringify(req.body)
+                }
+            })
+        })
+    } else {
+        console.log(req.statusCode);
+    }
+
+    result = await handleOrderEventImpl(body);
 
     return result;
 }
