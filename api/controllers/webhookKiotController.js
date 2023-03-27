@@ -16,8 +16,9 @@ export const handleInvoiceEvent = async (req, res) => {
 
     const response = await axios({
         method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
+        url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
         data: {
+            "eventType": "invoice_event",
             "data": JSON.stringify(req.body)
         }
     })
@@ -42,8 +43,9 @@ export const handleOrderEvent = async (req, res) => {
 
     const response = await axios({
         method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/orderEvent`,
+        url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
         data: {
+            "eventType": "order_event",
             "data": JSON.stringify(req.body)
         }
     })
@@ -64,8 +66,9 @@ export const handleStockEvent = async (req, res) => {
 
     const response = await axios({
         method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/stockEvent`,
+        url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
         data: {
+            "eventType": "stock_event",
             "data": JSON.stringify(req.body)
         }
     })
