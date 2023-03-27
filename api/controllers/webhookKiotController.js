@@ -13,20 +13,20 @@ export const handleInvoiceEvent = async (req, res) => {
     let result = {};
 
     const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
+            data: {
+                "eventType": "stock_event",
+                "data": JSON.stringify(req.body)
+            }
+        })
+        console.log(response.data)
 
-    const response = await axios({
-        method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
-        data: {
-            "eventType": "invoice_event",
-            "data": JSON.stringify(req.body)
-        }
-    })
-
-    console.log(response.data)
-
-
-
+    } catch (e) {
+        throw e;
+    }
 
 
     result = await handleInvoiceEventImpl(body);
@@ -41,16 +41,20 @@ export const handleOrderEvent = async (req, res) => {
 
     const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
 
-    const response = await axios({
-        method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
-        data: {
-            "eventType": "order_event",
-            "data": JSON.stringify(req.body)
-        }
-    })
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
+            data: {
+                "eventType": "stock_event",
+                "data": JSON.stringify(req.body)
+            }
+        })
+        console.log(response.data)
 
-    console.log(response.data)
+    } catch (e) {
+        throw e;
+    }
 
 
     result = await handleOrderEventImpl(body);
@@ -63,22 +67,25 @@ export const handleStockEvent = async (req, res) => {
     let result = {};
 
     const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
+            data: {
+                "eventType": "stock_event",
+                "data": JSON.stringify(req.body)
+            }
+        })
+        console.log(response.data)
 
-    const response = await axios({
-        method: 'post',
-        url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
-        data: {
-            "eventType": "stock_event",
-            "data": JSON.stringify(req.body)
-        }
-    })
-    console.log(response.data)
+    } catch (e) {
+        throw e;
+    }
 
     result = await handleStockEventImpl(body);
 
     return result;
 }
-
 
 
 export const createBaseJobManual = async (req, res) => {
