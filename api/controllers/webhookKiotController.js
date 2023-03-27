@@ -18,7 +18,7 @@ export const handleInvoiceEvent = async (req, res) => {
             method: 'post',
             url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
             data: {
-                "eventType": "stock_event",
+                "eventType": "invoice_event",
                 "data": JSON.stringify(req.body)
             }
         })
@@ -46,7 +46,7 @@ export const handleOrderEvent = async (req, res) => {
             method: 'post',
             url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
             data: {
-                "eventType": "stock_event",
+                "eventType": "order_event",
                 "data": JSON.stringify(req.body)
             }
         })
