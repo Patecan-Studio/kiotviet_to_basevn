@@ -19,9 +19,11 @@ export const handleInvoiceEventImpl = async (body) => {
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
     const foundedSale = await findSaleInformation(data.SoldById);
+
+    console.log("SALE ON KIOT: "+foundedSale);
     const saleOnBase = await checkUserByEmail(foundedSale.email);
 
-    console.log(saleOnBase.username);
+    console.log("SALE ON BASE: "+saleOnBase);
 
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
