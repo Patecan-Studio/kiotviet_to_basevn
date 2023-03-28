@@ -18,13 +18,13 @@ export const handleInvoiceEventImpl = async (body) => {
     let createTaskBaseVNResponse = null;
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
-    const emailSale = await findSaleInformation(data.SoldById).email;
-    const usernameSale = await checkUserByEmail(emailSale).username;
+    const foundedSale = await findSaleInformation(data.SoldById);
+    const saleOnBase = await checkUserByEmail(foundedSale.email);
 
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
-        'followers': `@datftiles`,
+        'followers': `@${saleOnBase.username}`,
         'username': '@cuongdv',
         'workflow_id': baseVnConfig.workflowId,
         'content': `${data.Description}`,

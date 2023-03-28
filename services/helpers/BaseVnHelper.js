@@ -1,5 +1,6 @@
 import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
+import {findSaleInformation} from "./KiotVietHelper.js";
 
 export const checkIfJobExistInBaseVN = async function (invoiceCode){
     const baseVNBodyDetails = {
@@ -56,10 +57,7 @@ const checkIfInvoiceIsUpdatedOrDeleted = function (invoiceCode){
 export async function checkUserByEmail(email){
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessTokenAccount,
-        'creator_username': baseVnConfig.creatorUsername,
         'email': email,
-        'workflow_id': baseVnConfig.workflowId,
-        'status': 'active'
     };
 
     let formBody = [];
@@ -80,8 +78,8 @@ export async function checkUserByEmail(email){
 
     const allUsersResponse = await createTaskBaseVNRequest.json();
     const foundUser = allUsersResponse.user;
-    return foundUser;
-}
 
+    return foundUser.username;
+}
 
 
