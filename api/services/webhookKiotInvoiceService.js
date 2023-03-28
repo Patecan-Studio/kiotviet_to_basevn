@@ -1,7 +1,7 @@
-import {findBranchInformation} from "../../services/helpers/KiotVietHelper.js";
+import {findBranchInformation, findSaleInformation} from "../../services/helpers/KiotVietHelper.js";
 import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
-import {checkIfJobExistInBaseVN} from "../../services/helpers/BaseVnHelper.js";
+import {checkIfJobExistInBaseVN, checkUserByEmail} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
 import {getUrl} from "../../utils/getConfigsService.js";
 
@@ -18,11 +18,13 @@ export const handleInvoiceEventImpl = async (body) => {
     let createTaskBaseVNResponse = null;
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
+    const emailSale = await findSaleInformation(SoldByName).email;
+    const usernameSale = await checkUserByEmail(emailSale).username;
 
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
-        'followers': baseVnConfig.followers,
+        'followers': ['adminftiles', usernameSale],
         'username': '@cuongdv',
         'workflow_id': baseVnConfig.workflowId,
         'content': `${data.Description}`,
@@ -43,11 +45,11 @@ export const handleInvoiceEventImpl = async (body) => {
         'custom_so_dien_thoai_nguoi_nhan': data.InvoiceDelivery != null ? data.InvoiceDelivery.ContactNumber : ""
     }
 
-    if(filterAgency(data.BranchId, data.CustomerId)){
+    if (filterAgency(data.BranchId, data.CustomerId)) {
 
-        if(filterBranch(data.BranchId)){
+        if (filterBranch(data.BranchId)) {
             const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
-            if(isJobExistInBaseVN  === undefined){
+            if (isJobExistInBaseVN === undefined) {
                 console.log(log(`----> THIS IS NEW JOB <----`))
                 await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
             } else {
@@ -69,10 +71,10 @@ const createTaskBaseVN = async function (createTaskBaseVNResponse, statusValue, 
     }
     formBody = formBody.join("&");
 
-    if(statusValue !== 2 && status.includes("update")){
+    if (statusValue !== 2 && status.includes("update")) {
         const createTaskBaseVNRequest = await fetch('https://workflow.base.vn/extapi/v1/job/create', {
             method: 'POST',
-            headers:{
+            headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formBody
@@ -81,7 +83,7 @@ const createTaskBaseVN = async function (createTaskBaseVNResponse, statusValue, 
         createTaskBaseVNResponse = await createTaskBaseVNRequest.json();
     }
 
-    console.log(log("CREATE JOB BaseVN: ")+'\n' + `${JSON.stringify(createTaskBaseVNResponse)}\n`);
+    console.log(log("CREATE JOB BaseVN: ") + '\n' + `${JSON.stringify(createTaskBaseVNResponse)}\n`);
 }
 
 const editTaskBaseVN = async function (editTaskBaseVNResponse, statusValue, status, updatedBodyDetails, taskId) {
@@ -90,14 +92,14 @@ const editTaskBaseVN = async function (editTaskBaseVNResponse, statusValue, stat
         let encodedKey = encodeURIComponent(property);
         let encodedValue = encodeURIComponent(updatedBodyDetails[property]);
         formBody.push(encodedKey + "=" + encodedValue);
-        formBody.push("id" + "="+ taskId);
+        formBody.push("id" + "=" + taskId);
     }
     formBody = formBody.join("&");
 
-    if(statusValue !== 2 && status.includes("update")){
+    if (statusValue !== 2 && status.includes("update")) {
         const createTaskBaseVNRequest = await fetch('https://workflow.base.vn/extapi/v1/job/edit', {
             method: 'POST',
-            headers:{
+            headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: formBody
@@ -110,21 +112,20 @@ const editTaskBaseVN = async function (editTaskBaseVNResponse, statusValue, stat
 }
 
 
-
 const deleteTaskBaseVN = async function (deleteTaskBaseVNResponse, updatedBodyDetails, taskId) {
     let formBody = [];
     for (let property in updatedBodyDetails) {
         let encodedKey = encodeURIComponent(property);
         let encodedValue = encodeURIComponent(updatedBodyDetails[property]);
         formBody.push(encodedKey + "=" + encodedValue);
-        formBody.push("id" + "="+ taskId);
+        formBody.push("id" + "=" + taskId);
     }
     formBody = formBody.join("&");
 
 
     const deleteTaskBaseVNRequest = await fetch('', {
         method: 'POST',
-        headers:{
+        headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: formBody
@@ -137,38 +138,24 @@ const deleteTaskBaseVN = async function (deleteTaskBaseVNResponse, updatedBodyDe
 }
 
 
-
-const filterBranch = function (branchCode){
+const filterBranch = function (branchCode) {
     const acceptedBranch = [1000000114, 1000000115, 1000000136, 1000000131];
     return acceptedBranch.includes(branchCode);
 }
 
-const filterAgency = function (branchId, customerId){
+const filterAgency = function (branchId, customerId) {
     const highestBranch = 1000000114;
     let hcmBranchCode = [1003114420, 1003094169];
 
 
     console.log(log(`CHECKING AGENCY:`) + ` branch ID: ${branchId} customer ID: ${customerId}`);
 
-    if(branchId === highestBranch && hcmBranchCode.includes(customerId) ){
+    if (branchId === highestBranch && hcmBranchCode.includes(customerId)) {
         return false;
     }
 
     return true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // =========================================
@@ -211,11 +198,11 @@ export const createBaseJobManualImpl = async (req, res) => {
         'custom_so_dien_thoai_nguoi_nhan': data.invoiceDelivery != null ? data.invoiceDelivery.contactNumber : ""
     }
 
-    if(filterAgency(data.branchId, data.customerCode)){
+    if (filterAgency(data.branchId, data.customerCode)) {
 
-        if(filterBranch(data.branchId)){
+        if (filterBranch(data.branchId)) {
             const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
-            if(isJobExistInBaseVN  === undefined){
+            if (isJobExistInBaseVN === undefined) {
                 console.log(log(`----> THIS IS NEW JOB <----`))
                 await createTaskBaseVN(createTaskBaseVNResponse, statusValue, status, baseVNBodyDetails, invoiceCode);
             } else {

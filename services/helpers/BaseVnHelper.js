@@ -51,3 +51,37 @@ export const checkIfJobExistInBaseVN = async function (invoiceCode){
 const checkIfInvoiceIsUpdatedOrDeleted = function (invoiceCode){
 
 }
+
+
+export async function checkUserByEmail(email){
+    const baseVNBodyDetails = {
+        'access_token': baseVnConfig.accessTokenAccount,
+        'creator_username': baseVnConfig.creatorUsername,
+        'email': email,
+        'workflow_id': baseVnConfig.workflowId,
+        'status': 'active'
+    };
+
+    let formBody = [];
+    for (let property in baseVNBodyDetails) {
+        let encodedKey = encodeURIComponent(property);
+        let encodedValue = encodeURIComponent(baseVNBodyDetails[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    const createTaskBaseVNRequest = await fetch('https://account.base.vn/extapi/v1/user/search.by.email', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody
+    });
+
+    const allUsersResponse = await createTaskBaseVNRequest.json();
+    const foundUser = allUsersResponse.user;
+    console.log(foundUser.username)
+}
+
+
+
