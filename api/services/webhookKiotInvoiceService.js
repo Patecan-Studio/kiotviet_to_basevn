@@ -24,7 +24,7 @@ export const handleInvoiceEventImpl = async (body) => {
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
-        'followers': ['adminftiles', usernameSale],
+        'followers': `@${usernameSale}`,
         'username': '@cuongdv',
         'workflow_id': baseVnConfig.workflowId,
         'content': `${data.Description}`,
