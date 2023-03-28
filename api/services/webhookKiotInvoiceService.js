@@ -20,15 +20,13 @@ export const handleInvoiceEventImpl = async (body) => {
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
     const foundedSale = await findSaleInformation(data.SoldById);
 
-    console.log("SALE ON KIOT: "+foundedSale);
     const saleOnBase = await checkUserByEmail(foundedSale.email);
 
-    console.log("SALE ON BASE: "+saleOnBase);
 
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
-        'followers': `@${saleOnBase.username}`,
+        'followers': `@${saleOnBase}`,
         'username': '@cuongdv',
         'workflow_id': baseVnConfig.workflowId,
         'content': `${data.Description}`,
