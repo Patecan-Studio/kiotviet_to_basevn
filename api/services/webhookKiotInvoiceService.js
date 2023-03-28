@@ -18,7 +18,7 @@ export const handleInvoiceEventImpl = async (body) => {
     let createTaskBaseVNResponse = null;
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
-    const emailSale = await findSaleInformation(SoldByName).email;
+    const emailSale = await findSaleInformation(data.SoldById).email;
     const usernameSale = await checkUserByEmail(emailSale).username;
 
     const baseVNBodyDetails = {
