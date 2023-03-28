@@ -21,6 +21,8 @@ export const handleInvoiceEventImpl = async (body) => {
     const foundedSale = await findSaleInformation(data.SoldById);
     const saleOnBase = await checkUserByEmail(foundedSale.email);
 
+    console.log(saleOnBase.username);
+
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
