@@ -80,7 +80,7 @@ export async function checkUserByEmail(email){
 
     const allUsersResponse = await createTaskBaseVNRequest.json();
     const foundUser = allUsersResponse.user;
-    console.log(foundUser.username)
+    return foundUser;
 }
 
 
