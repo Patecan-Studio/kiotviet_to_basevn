@@ -14,19 +14,30 @@ export const handleInvoiceEventImpl = async (body) => {
     const statusValue = await data.Status;
     const branchId = data.BranchId;
     const invoiceDetails = data.InvoiceDetails;
+    const purchaseDate = data.PurchaseDate;
+    const dateObj = new Date(purchaseDate);
+
+    const hour = dateObj.get;
     const finalResult = null;
     let createTaskBaseVNResponse = null;
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
-    const foundedSale = await findSaleInformation(data.SoldById);
+    let saleOnBaseUsername="adminftiles";
+    try {
+        const foundedSale = await findSaleInformation(data.SoldById);
+        if(foundedSale.email !== undefined){
+            saleOnBaseUsername = await checkUserByEmail(foundedSale.email);
+        }
+    } catch (e) {
+        throw e;
+    }
 
-    const saleOnBase = await checkUserByEmail(foundedSale.email);
 
 
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
-        'followers': `@${saleOnBase}`,
+        'followers': `@${saleOnBaseUsername}`,
         'username': '@cuongdv',
         'workflow_id': baseVnConfig.workflowId,
         'content': `${data.Description}`,
@@ -162,8 +173,8 @@ const filterAgency = function (branchId, customerId) {
 
 // =========================================
 
-export const createBaseJobManualImpl = async (req, res) => {
-    const raw_body = req.body;
+export const createBaseJobManualImpl = async (body) => {
+    const raw_body = body;
     console.log(`Received request:' ${JSON.stringify(raw_body)}`)
     const data = raw_body;
     const invoiceCode = data.code;
