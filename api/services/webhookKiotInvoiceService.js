@@ -186,11 +186,21 @@ export const createBaseJobManualImpl = async (body) => {
     let createTaskBaseVNResponse = null;
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
+    let saleOnBaseUsername="adminftiles";
+    try {
+        const foundedSale = await findSaleInformation(data.soldById);
+        if(foundedSale.email !== undefined){
+            saleOnBaseUsername = await checkUserByEmail(foundedSale.email);
+        }
+    } catch (e) {
+        throw e;
+    }
+
 
     const baseVNBodyDetails = {
         'access_token': baseVnConfig.accessToken,
         'creator_username': baseVnConfig.creatorUsername,
-        'followers': baseVnConfig.followers,
+        'followers': `@${saleOnBaseUsername}`,
         'username': '@cuongdv',
         'workflow_id': baseVnConfig.workflowId,
         'content': `${data.description}`,

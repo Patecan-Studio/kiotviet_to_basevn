@@ -75,7 +75,7 @@ export async function findInvoiceInformation(invoiceCode){
 export async function findSaleInformation(saleId){
 
 
-    const saleRequest = await fetch(`https://public.kiotapi.com/users`,{
+    const saleRequest = await fetch(`https://public.kiotapi.com/users?pageSize=100`,{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -90,7 +90,6 @@ export async function findSaleInformation(saleId){
     const saleInfo = saleResponse.data.filter(function (sale) {
         return sale.id === saleId;
     });
-
 
     return saleInfo[0];
 }
