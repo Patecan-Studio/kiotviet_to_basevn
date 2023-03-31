@@ -54,7 +54,6 @@ export async function findBranchInformation(branchId){
 
 export async function findInvoiceInformation(invoiceCode){
 
-
     const invoiceRequest = await fetch(`https://public.kiotapi.com/invoices/code/${invoiceCode}`,{
         method: "GET",
         headers: {
