@@ -84,9 +84,10 @@ const html = `
         font-family: neo-sans;
         font-weight: 700;
         font-size: calc(62rem / 16);
+        color: #FFACAC;
       }
       body {
-        background: white;
+        background: #C9EEFF;
       }
       section {
         border-radius: 1em;
@@ -97,11 +98,15 @@ const html = `
         margin-right: -50%;
         transform: translate(-50%, -50%);
       }
+      
+      h1 { color: #FFACAC; font-family: 'Lato', sans-serif; font-size: 54px; font-weight: 300; line-height: 58px; margin: 0 0 58px; }
+
+p { color: #FFACAC; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 26px; text-indent: 30px; margin: 0; }
     </style>
   </head>
   <body>
     <section>
-      Welcome to Patecan Studio.
+      WELCOME TO PATECAN STUDIO !!!
     </section>
   </body>
 </html>
