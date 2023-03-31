@@ -95,5 +95,3 @@ export async function findSaleInformation(saleId){
     return saleInfo[0];
 }
 
-
-(await findSaleInformation(1424987));
