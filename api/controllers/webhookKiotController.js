@@ -7,12 +7,13 @@ import {getUrl} from "../../utils/getConfigsService.js";
 import {createBaseJobManualImpl, handleInvoiceEventImpl} from "../services/webhookKiotInvoiceService.js";
 import {handleOrderEventImpl} from "../services/webhookKiotOrderService.js";
 import {handleStockEventImpl} from "../services/webhookKiotStockService.js";
+import {ServicesUrl} from "../../settings/ServicesUrl.js";
 
 export const handleInvoiceEvent = async (req, res) => {
     const body = req.body;
     let result = {};
 
-    const ftilesBackendDevUrl = "https://ftiles.herokuapp.com";
+    const ftilesBackendDevUrl = ServicesUrl.ftiles_backend_dev;
     try {
         const response = await axios({
             method: 'post',
@@ -39,7 +40,7 @@ export const handleOrderEvent = async (req, res) => {
     const body = req.body;
     let result = {};
 
-    const ftilesBackendDevUrl = "https://ftiles.herokuapp.com";
+    const ftilesBackendDevUrl = ServicesUrl.ftiles_backend_dev;
 
     try {
         const response = await axios({
