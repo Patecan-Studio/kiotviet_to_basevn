@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-d
 dotenv.config()
 import {znsConfig} from "../../settings/ZnsConfig.js";
 import fs from "fs";
+import fetch from 'node-fetch'
 
 
 

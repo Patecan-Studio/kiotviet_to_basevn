@@ -1,6 +1,7 @@
 import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
 import {findSaleInformation} from "./KiotVietHelper.js";
+import fetch from 'node-fetch'
 
 export const checkIfJobExistInBaseVN = async function (invoiceCode){
     const baseVNBodyDetails = {

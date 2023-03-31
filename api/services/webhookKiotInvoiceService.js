@@ -3,6 +3,7 @@ import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
 import {checkIfJobExistInBaseVN, checkUserByEmail} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
+import fetch from 'node-fetch'
 import {getUrl} from "../../utils/getConfigsService.js";
 
 export const handleInvoiceEventImpl = async (body) => {
