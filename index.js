@@ -6,6 +6,7 @@ import webhookBaseRouter  from "./api/routes/webhookBaseRoute.js";
 import productRouter from "./api/routes/product.js";
 import {log} from "./settings/logger.js";
 import cors from 'cors';
+import * as Sentry from "@sentry/node";
 
 const app = express()
 
