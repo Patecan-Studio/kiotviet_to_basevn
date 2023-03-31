@@ -7,6 +7,7 @@ import productRouter from "./api/routes/product.js";
 import {log} from "./settings/logger.js";
 import cors from 'cors';
 import * as Sentry from "@sentry/node";
+import * as Tracing from "@sentry/node";
 
 const app = express()
 
