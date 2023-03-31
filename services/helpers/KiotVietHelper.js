@@ -91,5 +91,9 @@ export async function findSaleInformation(saleId){
         return sale.id === saleId;
     });
 
+    console.log(saleInfo[0]);
     return saleInfo[0];
 }
+
+
+(await findSaleInformation(1424987));

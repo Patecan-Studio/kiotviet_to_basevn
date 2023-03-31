@@ -17,7 +17,6 @@ export const handleInvoiceEventImpl = async (body) => {
     const purchaseDate = data.PurchaseDate;
     const dateObj = new Date(purchaseDate);
 
-    const hour = dateObj.get;
     const finalResult = null;
     let createTaskBaseVNResponse = null;
 
@@ -189,8 +188,10 @@ export const createBaseJobManualImpl = async (body) => {
     let saleOnBaseUsername="adminftiles";
     try {
         const foundedSale = await findSaleInformation(data.soldById);
-        if(foundedSale.email !== undefined){
-            saleOnBaseUsername = await checkUserByEmail(foundedSale.email);
+        if(foundedSale !== undefined){
+            if(foundedSale.email !== undefined){
+                saleOnBaseUsername = await checkUserByEmail(foundedSale.email);
+            }
         }
     } catch (e) {
         throw e;
