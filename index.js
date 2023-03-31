@@ -103,7 +103,8 @@ const html = `
   </head>
   <body>
     <section>
-      Hello from Render!
+    <img class="logo" src="./resource/logo.png" alt="Patecan_Logo">
+      Welcome to Patecan Studio.
     </section>
   </body>
 </html>
