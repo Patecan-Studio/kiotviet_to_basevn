@@ -43,6 +43,7 @@ app.use(function onError(err, req, res, next) {
 app.use("/kiotviet/webhook", webhookKiotRouter)
 app.use("/base/webhook", webhookBaseRouter)
 app.use("/api/product", productRouter);
+
 app.get("/", (req, res) => res.type('html').send(html));
 
 
@@ -52,9 +53,6 @@ app.listen(port, (err) => {
     }
     console.log(log(`server is listening on ${port}`));
 })
-
-
-
 
 
 

@@ -39,7 +39,7 @@ export const handleOrderEvent = async (req, res) => {
     const body = req.body;
     let result = {};
 
-    const ftilesBackendDevUrl = await getUrl('ftiles-backend-dev');
+    const ftilesBackendDevUrl = "https://ftiles.herokuapp.com";
 
     try {
         const response = await axios({
