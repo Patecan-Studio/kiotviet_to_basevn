@@ -7,6 +7,7 @@ import * as Sentry from "@sentry/node";
 import fetch from 'node-fetch'
 import {getUrl} from "../../utils/getConfigsService.js";
 import {findBaseUsernameByKiotVietAccount} from "../../services/helpers/KiotAndBaseHepler.js";
+import {ServicesUrl} from "../../settings/ServicesUrl.js";
 
 export const handleInvoiceEventImpl = async (body) => {
 
@@ -167,6 +168,25 @@ const filterAgency = function (branchId, customerId) {
 // =========================================
 
 export const createBaseJobManualImpl = async (body) => {
+
+
+    const ftilesBackendDevUrl = ServicesUrl.ftiles_backend_dev;
+
+    axios({
+        method: 'post',
+        url: `${ftilesBackendDevUrl}/receiverPort/kiotVietEvent`,
+        data: {
+            "eventType": "invoice_event",
+            "data": JSON.stringify(body)
+        }
+    }).then((result) => {
+        console.log(result)
+    }).catch((e) => {
+        Sentry.captureException(e);
+        throw new Error(e);
+    });
+
+
     const raw_body = body;
     console.log(`Received request:' ${JSON.stringify(raw_body)}`)
     const data = raw_body;
@@ -179,11 +199,11 @@ export const createBaseJobManualImpl = async (body) => {
     let createTaskBaseVNResponse = null;
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
-    let saleOnBaseUsername="adminftiles";
+    let saleOnBaseUsername = "adminftiles";
     try {
         const foundedSale = await findSaleInformation(data.soldById);
-        if(foundedSale !== undefined){
-            if(foundedSale.email !== undefined){
+        if (foundedSale !== undefined) {
+            if (foundedSale.email !== undefined) {
                 saleOnBaseUsername = await checkUserByEmail(foundedSale.email);
             }
         }

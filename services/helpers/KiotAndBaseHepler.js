@@ -10,7 +10,7 @@ export const findBaseUsernameByKiotVietAccount = async function (userId){
 
     let saleOnBaseUsername="adminftiles";
     try {
-        const foundedSale = await findSaleInformation(data.SoldById);
+        const foundedSale = await findSaleInformation(userId);
         if(foundedSale.email !== undefined){
             saleOnBaseUsername = await checkUserByEmail(foundedSale.email);
         }
