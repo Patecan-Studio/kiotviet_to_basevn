@@ -3,8 +3,10 @@ import {baseVnConfig} from "../../settings/BaseVnConfig.js";
 import {log} from "../../settings/logger.js";
 import {checkIfJobExistInBaseVN, checkUserByEmail} from "../../services/helpers/BaseVnHelper.js";
 import axios from "axios";
+import * as Sentry from "@sentry/node";
 import fetch from 'node-fetch'
 import {getUrl} from "../../utils/getConfigsService.js";
+import {findBaseUsernameByKiotVietAccount} from "../../services/helpers/KiotAndBaseHepler.js";
 
 export const handleInvoiceEventImpl = async (body) => {
 
@@ -22,16 +24,7 @@ export const handleInvoiceEventImpl = async (body) => {
     let createTaskBaseVNResponse = null;
 
     const sdtDaily = await findBranchInformation(branchId).contactNumber;
-    let saleOnBaseUsername="adminftiles";
-    try {
-        const foundedSale = await findSaleInformation(data.SoldById);
-        if(foundedSale.email !== undefined){
-            saleOnBaseUsername = await checkUserByEmail(foundedSale.email);
-        }
-    } catch (e) {
-        throw e;
-    }
-
+    const saleOnBaseUsername = await findBaseUsernameByKiotVietAccount(data.SoldById);
 
 
     const baseVNBodyDetails = {
