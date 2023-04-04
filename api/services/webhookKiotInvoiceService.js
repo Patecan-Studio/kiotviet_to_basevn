@@ -150,9 +150,7 @@ const filterBranch = function (branchCode) {
     const isAcceptedToCreateJob = acceptedBranch.includes(branchCode);
 
     if(branchCode === 1261039){
-        baseVnConfig.workflowId = 6464;
-    } else {
-        baseVnConfig.workflowId = 5252;
+        baseVnConfig.setDevEnvironment();
     }
 
     return isAcceptedToCreateJob;

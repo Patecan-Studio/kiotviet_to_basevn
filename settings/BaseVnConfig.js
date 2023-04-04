@@ -3,5 +3,8 @@ export const baseVnConfig = {
     accessTokenAccount : '7283-FSZJYPX64CF2KH3VCJDUETKVWEX6L5KJNUYG85XF5R96HL39JVNBS6X9Z8GQ3Q9W-YEMURQNFMV8CELCWBYKD3WS5TUZAAJQGKJENJB77YEGWA4G2N422CFSSCHX27CFL',
     creatorUsername: 'adminftiles',
     followers: 'adminftiles',
-    workflowId: '5252'
+    workflowId: '5252',
+    setDevEnvironment() {
+        this.workflowId = '6440';
+    },
 }
