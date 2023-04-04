@@ -166,7 +166,7 @@ const filterAgency = function (branchId, customerId) {
 
     console.log(log(`CHECKING AGENCY:`) + ` branch ID: ${branchId} customer ID: ${customerId}`);
 
-    if (branchId.includes(highestBranch) && hcmBranchCode.includes(customerId)) {
+    if (highestBranch.includes(branchId) && hcmBranchCode.includes(customerId)) {
         return false;
     }
 
