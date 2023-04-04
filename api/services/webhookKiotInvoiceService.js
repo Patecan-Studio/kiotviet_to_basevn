@@ -54,7 +54,7 @@ export const handleInvoiceEventImpl = async (body) => {
 
     if (filterAgency(data.BranchId, data.CustomerId)) {
 
-        if (filterBranch(data.BranchId)) {
+        if (filterBranch(branchId)) {
             const isJobExistInBaseVN = await checkIfJobExistInBaseVN(data.Code);
             if (isJobExistInBaseVN === undefined) {
                 console.log(log(`----> THIS IS NEW JOB <----`))
@@ -224,7 +224,7 @@ export const createBaseJobManualImpl = async (body) => {
         'creator_username': baseVnConfig.creatorUsername,
         'followers': `@${saleOnBaseUsername}`,
         'username': '@cuongdv',
-        'workflow_id': baseVnConfig.workflowId,
+        'workflow_id': data.branchId === 1261039 ? "6440" : "5252",
         'content': `${data.description}`,
         'name': `${data.code}`,
         'custom_so_hop_dong': data.code,
