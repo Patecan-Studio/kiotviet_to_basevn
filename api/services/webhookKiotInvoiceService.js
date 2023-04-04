@@ -33,7 +33,7 @@ export const handleInvoiceEventImpl = async (body) => {
         'creator_username': baseVnConfig.creatorUsername,
         'followers': `@${saleOnBaseUsername}`,
         'username': '@cuongdv',
-        'workflow_id': data.branchId === 1261039 ? "6440" : "5252",
+        'workflow_id': branchId === 1261039 ? "6440" : "5252",
         'content': `${data.Description}`,
         'name': `${data.Code}`,
         'custom_so_hop_dong': data.Code,
