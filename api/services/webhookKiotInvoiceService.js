@@ -146,18 +146,18 @@ const deleteTaskBaseVN = async function (deleteTaskBaseVNResponse, updatedBodyDe
 
 
 const filterBranch = function (branchCode) {
-    const acceptedBranch = [1000000114, 1000000115, 1000000136, 1000000131];
+    const acceptedBranch = [1000000114, 1000000115, 1000000136, 1000000131, 1261039];
     return acceptedBranch.includes(branchCode);
 }
 
 const filterAgency = function (branchId, customerId) {
-    const highestBranch = 1000000114;
+    const highestBranch = [1000000114, 1261039];
     let hcmBranchCode = [1003114420, 1003094169];
 
 
     console.log(log(`CHECKING AGENCY:`) + ` branch ID: ${branchId} customer ID: ${customerId}`);
 
-    if (branchId === highestBranch && hcmBranchCode.includes(customerId)) {
+    if (branchId.includes(highestBranch) && hcmBranchCode.includes(customerId)) {
         return false;
     }
 
