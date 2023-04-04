@@ -147,7 +147,16 @@ const deleteTaskBaseVN = async function (deleteTaskBaseVNResponse, updatedBodyDe
 
 const filterBranch = function (branchCode) {
     const acceptedBranch = [1000000114, 1000000115, 1000000136, 1000000131, 1261039];
-    return acceptedBranch.includes(branchCode);
+    const isAcceptedToCreateJob = acceptedBranch.includes(branchCode);
+
+    if(branchCode === 1261039){
+        baseVnConfig.workflowId = 6464;
+    } else {
+        baseVnConfig.workflowId = 5252;
+    }
+
+    return isAcceptedToCreateJob;
+
 }
 
 const filterAgency = function (branchId, customerId) {
