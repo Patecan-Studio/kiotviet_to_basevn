@@ -47,6 +47,7 @@ export async function findBranchInformation(branchId){
         return branch.id === branchId;
     });
 
+    console.log(`BRANH INFO: ${branchInfo}`);
     return branchInfo[0];
 }
 
