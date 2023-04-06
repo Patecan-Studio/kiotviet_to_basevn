@@ -11,22 +11,22 @@ import axios from "axios";
 
 const router = express.Router();
 
-router.post('/invoice/update', function(req, res) {
+router.post('/invoice/update', async function(req, res) {
 
     console.log(log(`LOG WEBHOOK DATA: `)+ '\n' +`${req}` +'\n');
     console.log(log(`RECEIVED INVOICE WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
 
-    handleInvoiceEvent(req, res).then(function (result) {
+    await handleInvoiceEvent(req, res).then(function (result) {
         console.log(result)
         res.status(200).send(result)
     })
 });
 
-router.post('/order/update', function(req, res) {
+router.post('/order/update', async function(req, res) {
 
     console.log(log(`RECEIVED ORDER WEBHOOK: `)+ '\n' +`${JSON.stringify(req.body)}` +'\n')
 
-    handleOrderEvent(req, res).then(function (result) {
+    await handleOrderEvent(req, res).then(function (result) {
         console.log(result)
         res.status(200).send(result)
     })

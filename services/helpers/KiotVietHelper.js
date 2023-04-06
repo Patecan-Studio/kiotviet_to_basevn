@@ -1,5 +1,6 @@
 import {kiotVietConfig} from "../../settings/KiotVietConfig.js";
 import fetch from 'node-fetch';
+import axios from "axios";
 
 
 export async function getKiotAccessToken(){
@@ -31,25 +32,48 @@ export async function getKiotAccessToken(){
 
 
 export async function findBranchInformation(branchId){
-    const branchRequest = await fetch("https://public.kiotapi.com/branches",{
-        method: "GET",
+    let allBranches = [];
+
+    let pageSize = 100;
+    let currentItem = 0;
+    let page = 0;
+    let data = [];
+    let response = null;
+
+
+    const config = {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Retailer": kiotVietConfig.retailer,
             "Authorization": await getKiotAccessToken()
+        },
+        params: {
+            pageSize: pageSize
         }
+    };
+
+    do {
+        response = (await axios.get(`https://public.kiotapi.com/branches?currentItem=${currentItem}`, config)).data;
+        data = data.concat(response.data);
+        ++page;
+        currentItem = (page*pageSize);
+    } while (response.data.length > 0);
+
+
+    data.forEach((branch)=>{
+        allBranches.push(branch);
     })
 
-    const branchRequestResponse = await branchRequest.json();
 
-    const branchInfo = branchRequestResponse.data.filter(function (branch) {
+    const branchInfo = data.filter(function (branch) {
         return branch.id === branchId;
     });
 
-    console.log(`BRANH INFO: ${branchInfo}`);
+    console.log(`BRANCH INFO: ${JSON.stringify(branchInfo[0])}`);
     return branchInfo[0];
 }
+
 
 
 

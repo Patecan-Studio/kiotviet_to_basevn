@@ -24,7 +24,7 @@ export const handleInvoiceEventImpl = async (body) => {
     const finalResult = null;
     let createTaskBaseVNResponse = null;
 
-    const sdtDaily = (await findBranchInformation(branchId)).contactNumber;
+    const sdtDaily = (await findBranchInformation(data.BranchId)).contactNumber;
     const saleOnBaseUsername = await findBaseUsernameByKiotVietAccount(data.SoldById);
 
 
