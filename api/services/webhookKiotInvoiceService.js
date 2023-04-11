@@ -41,7 +41,7 @@ export const handleInvoiceEventImpl = async (body) => {
         'custom_gia_tri_hop_dong': data.Total,
         'custom_nguoi_ban_hang': data.SoldByName,
         'custom_ten_khach_hang_dai_ly_': data.CustomerName,
-        'custom_so_dien_thoai_dai_ly': sdtDaily,
+        'custom_so_dien_thoai_dai_ly': (sdtDaily !== undefined || true)? sdtDaily : "0932915999",
         'custom_ngay_giao_hang-time': "14:28",
         'custom_ngay_giao_hang-date': "23/12/2022",
         'custom_ten_nguoi_nhan': data.InvoiceDelivery != null ? data.InvoiceDelivery.Receiver : "",
