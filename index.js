@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import webhookKiotRouter from "./api/routes/webhookKiotRoute.js";
 import webhookBaseRouter  from "./api/routes/webhookBaseRoute.js";
+import saleCustomerRouter  from "./api/routes/saleCustomerRoute.js";
 import productRouter from "./api/routes/product.js";
 import {log} from "./settings/logger.js";
 import cors from 'cors';
@@ -43,6 +44,7 @@ app.use(Sentry.Handlers.tracingHandler());
 
 app.use("/kiotviet/webhook", webhookKiotRouter)
 app.use("/base/webhook", webhookBaseRouter)
+app.use("/kiotviet/saleCustomer", saleCustomerRouter)
 app.use("/api/product", productRouter);
 
 app.get("/", (req, res) => res.type('html').send(html));

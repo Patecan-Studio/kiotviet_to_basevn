@@ -99,6 +99,25 @@ export async function findInvoiceInformation(invoiceCode){
 
 export async function findSaleInformation(saleId){
 
+    const saleRequest = await fetch(`https://public.kiotapi.com/users?pageSize=100`,{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Retailer": kiotVietConfig.retailer,
+            "Authorization": await getKiotAccessToken()
+        }
+    })
+
+    const saleResponse = await saleRequest.json();
+    const saleInfo = saleResponse.data.filter(function (sale) {
+        return sale.id === saleId;
+    });
+
+    return saleInfo[0];
+}
+
+export async function findSaleInformationTmp(saleId){
 
     const saleRequest = await fetch(`https://public.kiotapi.com/users?pageSize=100`,{
         method: "GET",
@@ -111,7 +130,7 @@ export async function findSaleInformation(saleId){
     })
 
     const saleResponse = await saleRequest.json();
-
+    console.log(saleResponse)
     const saleInfo = saleResponse.data.filter(function (sale) {
         return sale.id === saleId;
     });
