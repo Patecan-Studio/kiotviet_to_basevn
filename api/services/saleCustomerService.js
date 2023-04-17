@@ -98,8 +98,8 @@ export async function groupCustomerOfSale(saleCustomersData){
         if(saleIdsArray.includes(saleInfo.id.toString())){
             let tmpObj = {}
             tmpObj['saleId'] = saleInfo.id.toString();
-            tmpObj['customers'] = groupedSaleCustomerData[saleInfo.id.toString()];
             tmpObj['saleInfo'] = saleInfo;
+            tmpObj['customers'] = groupedSaleCustomerData[saleInfo.id.toString()];
             groupedSaleInfoCustomerData.push(tmpObj);
             tmpObj = {};
         }
