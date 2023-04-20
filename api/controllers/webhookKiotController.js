@@ -14,6 +14,8 @@ export const handleInvoiceEvent = async (req, res) => {
     let result = {};
 
     const ftilesBackendDevUrl = ServicesUrl.ftiles_backend_dev;
+    const ftilesDataTunnelUrl = ServicesUrl.ftiles_data_tunnel;
+
     try {
         const response = await axios({
             method: 'post',
@@ -28,6 +30,20 @@ export const handleInvoiceEvent = async (req, res) => {
     } catch (e) {
         throw e;
     }
+
+
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `${ftilesDataTunnelUrl}/invoice/update`,
+            data: req.body
+        })
+
+        console.log(response.data)
+    } catch (e) {
+        throw e;
+    }
+
 
 
     result = await handleInvoiceEventImpl(body);
