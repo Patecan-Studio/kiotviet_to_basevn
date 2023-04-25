@@ -12,7 +12,7 @@ router.get('/getAllSaleCustomers', async function(req, res) {
 });
 
 
-router.get('/getAllSaleCustomers/:saleId', async function(req, res) {
+router.get('/getSaleCustomers/:saleId', async function(req, res) {
 
     await handleGetCustomersOfSpecificSale(req, res).then(function (result) {
         console.log(result)
