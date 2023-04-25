@@ -1,5 +1,5 @@
 import express from "express";
-import {handleGetAllSaleCustomers} from "../controllers/saleCustomerController.js";
+import {handleGetAllSaleCustomers, handleGetCustomersOfSpecificSale} from "../controllers/saleCustomerController.js";
 
 const router = express.Router();
 
@@ -11,6 +11,14 @@ router.get('/getAllSaleCustomers', async function(req, res) {
     })
 });
 
+
+router.get('/getAllSaleCustomers/:saleId', async function(req, res) {
+
+    await handleGetCustomersOfSpecificSale(req, res).then(function (result) {
+        console.log(result)
+        res.status(200).send(result)
+    })
+});
 
 
 export default router;

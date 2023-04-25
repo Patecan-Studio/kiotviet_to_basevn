@@ -43,7 +43,7 @@ export const handleGetAllSaleCustomerImpl = async (body) => {
 
     const saleCustomersData = [];
     const saleObjRegExp = /\{[^\}]*sale[^\}]*\}/;
-    data.forEach(async (customer)=>{
+    for (const customer of data) {
         const comments = customer['comments'];
         if( comments !== undefined && comments !== "" && comments.match(saleObjRegExp)){
             const saleStrings = comments.match(saleObjRegExp);
@@ -60,7 +60,7 @@ export const handleGetAllSaleCustomerImpl = async (body) => {
             saleCustomersData.push(saleObj);
         }
         allCustomers.push(customer);
-    });
+    }
     const result = (await groupCustomerOfSale(saleCustomersData));
     return result;
 }
@@ -97,7 +97,7 @@ export async function groupCustomerOfSale(saleCustomersData){
     allSaleResponse.data.forEach((saleInfo)=>{
         if(saleIdsArray.includes(saleInfo.id.toString())){
             let tmpObj = {}
-            tmpObj['saleId'] = saleInfo.id.toString();
+            tmpObj['saleId'] = saleInfo.id;
             tmpObj['saleInfo'] = saleInfo;
             tmpObj['customers'] = groupedSaleCustomerData[saleInfo.id.toString()];
             groupedSaleInfoCustomerData.push(tmpObj);
@@ -137,3 +137,65 @@ async function getRefreshToken() {
 
     return result;
 }
+
+
+
+
+export const handleGetCustomersOfSpecificSaleImpl = async (saleId) => {
+
+    let allCustomers = [];
+
+    let pageSize = 100;
+    let currentItem = 0;
+    let page = 0;
+    let data = [];
+    let response = null;
+
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Retailer": kiotVietConfig.retailer,
+            "Authorization": await getKiotAccessToken()
+        },
+        params: {
+            pageSize: pageSize
+        }
+    };
+
+    do {
+        response = (await axios.get(`https://public.kiotapi.com/customers?currentItem=${currentItem}`, config)).data;
+        data = data.concat(response.data);
+        ++page;
+        currentItem = (page*pageSize);
+    } while (response.data.length > 0);
+
+    const saleCustomersData = [];
+    const saleObjRegExp = /\{[^\}]*sale[^\}]*\}/;
+    for (const customer of data) {
+        const comments = customer['comments'];
+        if( comments !== undefined && comments !== "" && comments.match(saleObjRegExp)){
+            const saleStrings = comments.match(saleObjRegExp);
+            const saleObj = JSON.parse(saleStrings[0].replace(/(\w+):/g, '"$1":').replace(/:(\s*)(\w+)/, ':"$2"'));
+
+            saleObj.customers = {
+                id: customer.id,
+                code: customer.code,
+                name: customer.name,
+                contactNumber: customer.contactNumber,
+                organization: customer.organization,
+                createDate: customer.createdDate
+            };
+            saleCustomersData.push(saleObj);
+        }
+        allCustomers.push(customer);
+    }
+
+
+    const result = (await groupCustomerOfSale(saleCustomersData)).filter((obj)=> obj.saleId == saleId);
+    console.log(result)
+
+    return result;
+}
+
