@@ -5,6 +5,9 @@
   "main": "index.js",
   "type": "module",
   "private": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node index.js"
   },
@@ -32,8 +35,5 @@
     "number-to-text-vietnamese": "^1.1.3",
     "pdf-creator-node": "^2.3.5",
     "sqlite3": "^5.1.4"
-  },
-  "engines": {
-    "node": ">=16"
   }
 }
