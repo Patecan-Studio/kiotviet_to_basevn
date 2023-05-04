@@ -8,7 +8,7 @@ export const findBaseUsernameByKiotVietAccount = async function (userId){
     }
 
 
-    let saleOnBaseUsername=sudo;
+    let saleOnBaseUsername="adminftiles";
     try {
         const foundedSale = await findSaleInformation(userId);
         if(foundedSale.email !== undefined){

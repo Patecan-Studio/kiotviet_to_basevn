@@ -62,6 +62,7 @@ export const handleGetAllSaleCustomerImpl = async (body) => {
         allCustomers.push(customer);
     }
     const result = (await groupCustomerOfSale(saleCustomersData));
+    console.log(result)
     return result;
 }
 
@@ -194,8 +195,8 @@ export const handleGetCustomersOfSpecificSaleImpl = async (saleId) => {
 
 
     const result = (await groupCustomerOfSale(saleCustomersData)).filter((obj)=> obj.saleId == saleId);
-    console.log(result)
 
     return result;
 }
 
+//(await handleGetCustomersOfSpecificSaleImpl(1438845))
