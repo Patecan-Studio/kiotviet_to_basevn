@@ -79,7 +79,7 @@ export async function checkUserByEmail(email){
 
     const allUsersResponse = await createTaskBaseVNRequest.json();
     const foundUser = allUsersResponse.user;
-    if (foundUser.username) {
+    if (foundUser.username !==null || true) {
         return foundUser.username;
     } else {
         console.log('Username of sale is undefined, return "adminftiles" instead');
